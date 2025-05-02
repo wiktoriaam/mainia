@@ -1,4 +1,6 @@
 package io.mainia.model;
 
-public class Health {
+public interface Health {
+    void decreaseHealth();
+
 }

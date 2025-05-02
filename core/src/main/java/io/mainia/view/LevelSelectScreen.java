@@ -1,8 +1,19 @@
 package io.mainia.view;
 
 import com.badlogic.gdx.Screen;
+import io.mainia.Mainia;
+import io.mainia.viewmodel.GameViewModel;
 
 public class LevelSelectScreen implements Screen {
+
+    final Mainia game;
+    private GameViewModel gameViewModel;
+
+    public LevelSelectScreen(final Mainia game) {
+        this.game = game;
+        gameViewModel = game.getGameViewModel();
+    }
+
     @Override
     public void show() {
 
