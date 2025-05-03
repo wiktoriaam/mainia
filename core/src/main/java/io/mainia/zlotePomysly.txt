@@ -1,0 +1,2 @@
+-Modyfikatory
+poziom odwrotny (noty idą z dołu do góry)

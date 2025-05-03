@@ -1,0 +1,3 @@
+-Selektor poziomów
+-GameViewModel
+-obługa wczytywania sliderów

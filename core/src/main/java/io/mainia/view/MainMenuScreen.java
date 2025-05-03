@@ -17,14 +17,30 @@ public class  MainMenuScreen implements Screen {
 
     final Mainia game;
     private final GameViewModel gameViewModel;
+    private Stage stage;
 
     public MainMenuScreen(final Mainia game) {
         this.game = game;
         gameViewModel = game.getGameViewModel();
+        stage = new Stage(game.getViewport());
     }
 
     @Override
     public void show() {
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style.font = game.getFont();
+        style.fontColor = Color.WHITE;
+        TextButton button = new TextButton("Start game", style);
+        button.setSize(1,1);
+        button.setPosition(5,5);
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new LevelSelectScreen(game));
+            }
+        });
+        Gdx.input.setInputProcessor(stage);
+        stage.addActor(button);
     }
 
     @Override
@@ -37,6 +53,8 @@ public class  MainMenuScreen implements Screen {
         game.getBatch().end();
         //startButton.setPosition(3,3);
         //startButton.draw(game.getBatch(), 1);
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override

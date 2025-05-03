@@ -1,6 +1,8 @@
 package io.mainia.view;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.viewmodel.GameViewModel;
 
@@ -21,7 +23,7 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void render(float v) {
-
+        ScreenUtils.clear(Color.BLACK);
     }
 
     @Override

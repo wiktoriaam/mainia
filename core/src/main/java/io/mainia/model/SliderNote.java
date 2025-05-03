@@ -3,12 +3,10 @@ package io.mainia.model;
 public class SliderNote implements Note {
     private float hitTime;
     private float releaseTime;
-    private byte column;
 
-    public SliderNote(float hitTime, float releaseTime,byte column) {
+    public SliderNote(float hitTime, float releaseTime) {
         this.hitTime = hitTime;
         this.releaseTime = releaseTime;
-        this.column = column;
     }
 
     @Override
@@ -20,8 +18,4 @@ public class SliderNote implements Note {
         return releaseTime;
     }
 
-    @Override
-    public byte getColumn() {
-        return column;
-    }
 }

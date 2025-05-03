@@ -3,11 +3,9 @@ package io.mainia.model;
 
 public class HitNote implements Note {
     private final float hitTime;
-    private final byte column;
 
-    public HitNote(float hitTime, byte column) {
+    public HitNote(float hitTime) {
         this.hitTime = hitTime;
-        this.column = column;
     }
 
     @Override
@@ -15,8 +13,4 @@ public class HitNote implements Note {
         return hitTime;
     }
 
-    @Override
-    public byte getColumn() {
-        return column;
-    }
 }

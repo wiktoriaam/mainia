@@ -1,5 +1,62 @@
 package io.mainia.services;
 
+import io.mainia.model.HitNote;
+import io.mainia.model.Level;
+import io.mainia.model.Note;
+import io.mainia.model.WrongFileFormatException;
+
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class LevelFileReader {
+    private final File file;
+    public LevelFileReader(String filePath){
+        file = new File(filePath);
+    }
+
+    public Level readLevel(String levelFile) throws IOException {
+        Scanner scanner = new Scanner(file);
+        List<List<Note>> notes = new ArrayList<>();
+        String line;
+        short columnCount = -1;
+        float speed = -1;
+        while(scanner.hasNextLine()){
+            line = scanner.nextLine();
+            if(line.isBlank()) continue;
+            if(line.trim().equals("[General]")){
+                line = scanner.nextLine();
+                line = line.trim();
+                columnCount = (short) (line.charAt(12) - '0');
+                for(int i = 0; i < columnCount; i++) notes.add(new ArrayList<>());
+            }
+            else if(line.trim().equals("[Speed]")){
+                line = scanner.nextLine();
+                line = line.trim();
+                speed = Integer.parseInt(line);
+            }
+            else if(line.trim().equals("[HitObjects]")){
+                line = scanner.nextLine();
+                while(!line.isBlank()){
+                    String[] tmp = line.split(", ");
+                    if(tmp[0].equals("h")) {
+                        notes.get(Integer.parseInt(tmp[1])).add(new HitNote(Float.parseFloat(tmp[2])));
+                    }
+                    /*else{ //todo: zrobic obsluge sliderow
+
+                    }*/
+                }
+            }
+        }
+
+        if(columnCount==-1) throw new WrongFileFormatException("ColumnCount not found");
+        if(speed==-1) throw new WrongFileFormatException("Speed not found");
+
+        return new Level(speed, notes, columnCount);
+
+    }
 
 }

@@ -1,0 +1,12 @@
+[General]
+ColumnCount=4
+
+[Speed]
+5
+
+[HitObjects]
+h, 0, 1500
+h, 2, 3000
+h, 1, 4500
+h, 3, 5000
+h, 1, 5800
