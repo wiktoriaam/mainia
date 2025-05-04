@@ -13,8 +13,15 @@ public class Level {
         this.columnCount = columnCount;
     }
 
-    public void addNote(int column, Note note){
-
+    public List<List<Note>> getNotes() {
+        return notes;
     }
 
+    public float getSpeed() {
+        return speed;
+    }
+
+    public short getColumnCount() {
+        return columnCount;
+    }
 }

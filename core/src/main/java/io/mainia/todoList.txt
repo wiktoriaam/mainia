@@ -1,3 +1,4 @@
 -Selektor poziomów
 -GameViewModel
 -obługa wczytywania sliderów
+-offset gdy note ma się pojawić przed rozpoczęciem gry

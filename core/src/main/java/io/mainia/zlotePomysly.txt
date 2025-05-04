@@ -1,2 +1,6 @@
 -Modyfikatory
 poziom odwrotny (noty idą z dołu do góry)
+chaos - note pojawia się w losowej kolumnie i ma na sobie ktory guzik go hitnie
+
+-Grafika
+skórka na podstawie przykładowej gry z tutorialu libgdx Drop

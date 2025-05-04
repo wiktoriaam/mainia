@@ -1,1 +1,1 @@
-drop.png
+hit_note.png

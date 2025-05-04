@@ -18,7 +18,7 @@ public class LevelFileReader {
         file = new File(filePath);
     }
 
-    public Level readLevel(String levelFile) throws IOException {
+    public Level readLevel() throws IOException {
         Scanner scanner = new Scanner(file);
         List<List<Note>> notes = new ArrayList<>();
         String line;
@@ -48,6 +48,8 @@ public class LevelFileReader {
                     /*else{ //todo: zrobic obsluge sliderow
 
                     }*/
+                    if(scanner.hasNextLine())line = scanner.nextLine();
+                    else break;
                 }
             }
         }

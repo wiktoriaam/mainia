@@ -11,17 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
-import io.mainia.viewmodel.GameViewModel;
 
 public class  MainMenuScreen implements Screen {
 
     final Mainia game;
-    private final GameViewModel gameViewModel;
     private Stage stage;
 
     public MainMenuScreen(final Mainia game) {
         this.game = game;
-        gameViewModel = game.getGameViewModel();
         stage = new Stage(game.getViewport());
     }
 
