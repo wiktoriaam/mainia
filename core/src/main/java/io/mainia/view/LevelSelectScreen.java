@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
+import io.mainia.model.Level;
+import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
 
 public class LevelSelectScreen implements Screen {
@@ -16,6 +18,7 @@ public class LevelSelectScreen implements Screen {
     final Mainia game;
     private Stage stage;
     private LevelFileReader levelFileReader;
+    private KeymapReader keymapReader;
 
     public LevelSelectScreen(final Mainia game) {
         this.game = game;
@@ -35,8 +38,10 @@ public class LevelSelectScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 levelFileReader = new LevelFileReader("levelfiles/poziom.mainiabm");
+                keymapReader = new KeymapReader();
                 try {
-                    game.setScreen(new GameplayScreen(game, levelFileReader.readLevel()));
+                    Level level = levelFileReader.readLevel();
+                    game.setScreen(new GameplayScreen(game, level, keymapReader.readKeymap(level.getColumnCount())));
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println(Gdx.files.internal("levelfiles/poziom.mainiabm").file().getAbsolutePath());

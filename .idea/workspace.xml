@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64e59faa-f4fe-47d5-909b-b909f388774c" name="Changes" comment="initial structure part2, team collaboration">
-      <change afterPath="$PROJECT_DIR$/assets/levelfiles/poziom.mainiabm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/WrongFileFormatException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/todoList.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/zlotePomysly.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/HitResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/services/KeymapReader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/LevelSelectViewModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/settings/settings.mainia" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
@@ -19,26 +19,26 @@
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/model/Health.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/model/Health.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/model/Score.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/model/Score.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/GameplayScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/GameplayScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/LevelSelectScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/LevelSelectScreen.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/MainMenuScreen.class" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/classes/java/main/io/mainia/view/MainMenuScreen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/compileTransaction/stash-dir/MainMenuScreen.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/compileTransaction/stash-dir/Mainia.class.uniqueId0" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/core/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/HitNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/HitNote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Note.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Note.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/SliderNote.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/SliderNote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lwjgl3/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/lwjgl3/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Score.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/StaticHealth.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/StaticHealth.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/GameplayScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/GameplayScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/LevelSelectScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/LevelSelectScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" afterDir="false" />
     </list>
     <list id="3cb0b22a-7750-4258-bf5f-8b2f73664ccb" name="Changes by admin" comment="">
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/LevelSelectScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/LevelSelectScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Health.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Health.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" afterDir="false" />
     </list>
-    <list id="ef3a6ca5-edf8-4ba2-a72e-8b4d17b5ad77" name="Changes by wikto" comment="Changes by wikto">
-      <change beforePath="$PROJECT_DIR$/assets/drop.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Level.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/model/Level.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/services/LevelFileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/services/LevelFileReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/MainMenuScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/view/MainMenuScreen.java" afterDir="false" />
+    <list id="6568d43a-b528-4fd3-8516-605eb97e6034" name="Changes by korar" comment="">
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java" afterDir="false" />
     </list>
+    <list id="ef3a6ca5-edf8-4ba2-a72e-8b4d17b5ad77" name="Changes by wikto" comment="Changes by wikto" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,11 +65,39 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Exception" />
+        <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/core/src/main/java/io/mainia/viewmodel/GameplayViewModel.java">
+      <ranges>
+        <range start1="4" end1="6" start2="4" end2="5" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="17" end1="18" start2="16" end2="18" changelist="6568d43a-b528-4fd3-8516-605eb97e6034" />
+        <range start1="19" end1="20" start2="19" end2="19" changelist="6568d43a-b528-4fd3-8516-605eb97e6034" />
+        <range start1="21" end1="21" start2="20" end2="23" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="28" end1="29" start2="30" end2="30" changelist="6568d43a-b528-4fd3-8516-605eb97e6034" />
+        <range start1="30" end1="31" start2="31" end2="31" changelist="6568d43a-b528-4fd3-8516-605eb97e6034" />
+        <range start1="36" end1="37" start2="36" end2="36" changelist="6568d43a-b528-4fd3-8516-605eb97e6034" />
+        <range start1="44" end1="44" start2="43" end2="45" changelist="3cb0b22a-7750-4258-bf5f-8b2f73664ccb" />
+        <range start1="45" end1="45" start2="46" end2="47" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="47" end1="47" start2="49" end2="53" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="49" end1="54" start2="55" end2="55" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="55" end1="57" start2="56" end2="56" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="60" end1="61" start2="59" end2="60" changelist="3cb0b22a-7750-4258-bf5f-8b2f73664ccb" />
+        <range start1="63" end1="64" start2="62" end2="63" changelist="3cb0b22a-7750-4258-bf5f-8b2f73664ccb" />
+        <range start1="65" end1="66" start2="64" end2="67" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="67" end1="67" start2="68" end2="70" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="69" end1="69" start2="72" end2="75" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="71" end1="71" start2="77" end2="106" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+        <range start1="74" end1="74" start2="109" end2="110" changelist="3cb0b22a-7750-4258-bf5f-8b2f73664ccb" />
+        <range start1="83" end1="84" start2="119" end2="119" changelist="64e59faa-f4fe-47d5-909b-b909f388774c" />
+      </ranges>
+    </file>
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -87,11 +115,14 @@
   "keyToString": {
     "Application.Lwjgl3Launcher.executor": "Run",
     "Gradle.Build mainia.executor": "Run",
+    "Gradle.Build oop.executor": "Run",
     "Gradle.mainia:lwjgl3 [:lwjgl3:io.mainia.lwjgl3.Lwjgl3Launcher.main()].executor": "Run",
+    "Gradle.oop:lwjgl3 [:lwjgl3:io.mainia.lwjgl3.Lwjgl3Launcher.main()].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/korar/Documents/projekt/mainia/build.gradle",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -105,7 +136,7 @@
   <component name="RunManager">
     <configuration name="Lwjgl3Launcher" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="io.mainia.lwjgl3.Lwjgl3Launcher" />
-      <module name="mainia.lwjgl3.main" />
+      <module name="oop.lwjgl3.main" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="io.mainia.lwjgl3.*" />
@@ -125,11 +156,12 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-fbdcb00ec9e3-intellij.indexing.shared.core-IU-251.23774.435" />
-        <option value="bundled-js-predefined-d6986cc7102b-f27c65a3e318-JavaScript-IU-251.23774.435" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.25659.39" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.25659.39" />
       </set>
     </attachedChunks>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="64e59faa-f4fe-47d5-909b-b909f388774c" name="Changes" comment="" />
@@ -140,11 +172,24 @@
       <workItem from="1746096531563" duration="946000" />
       <workItem from="1746214489815" duration="2262000" />
       <workItem from="1746264891298" duration="8654000" />
+      <workItem from="1746437740209" duration="20000" />
+      <workItem from="1746788307429" duration="7681000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial structure part2, team collaboration" />

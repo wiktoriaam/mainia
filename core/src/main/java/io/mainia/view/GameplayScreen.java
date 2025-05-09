@@ -23,15 +23,16 @@ public class GameplayScreen implements Screen {
     private final Mainia game;
     private final GameplayViewModel gameplayViewModel;
     public Texture noteTexture;
-    private float currentTime = -10000;
+    private float currentTime = 0;
     public float columnWidth;
+    private final List<Integer> keymap;
 
-
-    public GameplayScreen(final Mainia game, final Level level) {
+    public GameplayScreen(final Mainia game, final Level level, final List<Integer> keymap) {
         this.game = game;
         gameplayViewModel = new GameplayViewModel(level, this);
         noteTexture  = new Texture("hit_note.png");
         columnWidth = 0.75f;
+        this.keymap = keymap;
     }
 
     @Override
@@ -53,8 +54,16 @@ public class GameplayScreen implements Screen {
                 sprite.draw(game.getBatch());
             }
         }
+        for(Sprite sprite : gameplayViewModel.getMissed()) {
+            sprite.translateY(-gameplayViewModel.getSpeed()*delta);
+            sprite.draw(game.getBatch());
+        }
+        game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore(), 1,9);
+        game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 1, 8);
         game.getBatch().end();
-
+        for(int i = 0; i < keymap.size(); i++) {
+            if (Gdx.input.isKeyJustPressed(keymap.get(i))) {gameplayViewModel.onPressUpdate(i,currentTime);}
+        }
     }
 
     @Override
