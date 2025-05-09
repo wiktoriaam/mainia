@@ -42,6 +42,7 @@ public class LevelSelectScreen implements Screen {
                 try {
                     Level level = levelFileReader.readLevel();
                     game.setScreen(new GameplayScreen(game, level, keymapReader.readKeymap(level.getColumnCount())));
+                    dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                     System.out.println(Gdx.files.internal("levelfiles/poziom.mainiabm").file().getAbsolutePath());

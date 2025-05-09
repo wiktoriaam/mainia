@@ -1,1 +1,6 @@
+column.png
 hit_note.png
+levelfiles/poziom.mainiabm
+music/turkish_march.ogg
+perfect_window.png
+settings/settings.mainia

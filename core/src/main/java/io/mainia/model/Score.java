@@ -1,8 +1,5 @@
 package io.mainia.model;
 
-import java.util.Observable;
-import java.util.Observer;
-
 public class Score {
     private int score;
     private int noOfPerfects;
@@ -30,7 +27,7 @@ public class Score {
             }
         }
     }
-    public void missed_update(){
+    public void missedUpdate(){
         noOfMisses++;
     }
 }

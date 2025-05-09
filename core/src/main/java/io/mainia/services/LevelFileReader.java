@@ -14,9 +14,7 @@ import java.util.Scanner;
 
 public class LevelFileReader {
     private final File file;
-    public LevelFileReader(String filePath){
-        file = new File(filePath);
-    }
+    public LevelFileReader(String filePath){file = new File(filePath);}
 
     public Level readLevel() throws IOException {
         Scanner scanner = new Scanner(file);
@@ -24,14 +22,26 @@ public class LevelFileReader {
         String line;
         short columnCount = -1;
         float speed = -1;
+        float length = -1;
+        String musicFilename = null;
         while(scanner.hasNextLine()){
             line = scanner.nextLine();
             if(line.isBlank()) continue;
             if(line.trim().equals("[General]")){
-                line = scanner.nextLine();
+                line = scanner.nextLine();//wczytywanie ilosci kolumn
                 line = line.trim();
                 columnCount = (short) (line.charAt(12) - '0');
                 for(int i = 0; i < columnCount; i++) notes.add(new ArrayList<>());
+
+                line = scanner.nextLine(); //wczytywanie dlugosci
+                line = line.trim();
+                String[] split = line.split("=");
+                length = Float.parseFloat(split[1]);
+
+                line = scanner.nextLine();//wczytywanie muzyki-nazwa pliku
+                line = line.trim();
+                String[] split2 = line.split("=");
+                musicFilename = split2[1];
             }
             else if(line.trim().equals("[Speed]")){
                 line = scanner.nextLine();
@@ -56,8 +66,9 @@ public class LevelFileReader {
 
         if(columnCount==-1) throw new WrongFileFormatException("ColumnCount not found");
         if(speed==-1) throw new WrongFileFormatException("Speed not found");
+        if(length==-1) throw new WrongFileFormatException("Length not found");
 
-        return new Level(speed, notes, columnCount);
+        return new Level(speed, notes, columnCount, length, musicFilename);
 
     }
 

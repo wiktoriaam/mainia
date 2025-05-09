@@ -1,5 +1,7 @@
 [General]
-ColumnCount=4
+ColumnCount=5
+Length=10
+Music=turkish_march.ogg
 
 [Speed]
 1
@@ -10,3 +12,4 @@ h, 2, 3000
 h, 1, 4500
 h, 3, 5000
 h, 1, 5800
+h, 4, 6000

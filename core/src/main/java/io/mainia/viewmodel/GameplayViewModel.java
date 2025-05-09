@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameplayViewModel {
-    GameplayScreen gameplayScreen;
+    private final GameplayScreen gameplayScreen;
     private final Level level;
     private final List<List<Note>> notes;
     private final float speed;
@@ -19,12 +19,14 @@ public class GameplayViewModel {
     private int[] firstToHit;
     private int[] firstToAdd;
     private final Score score = new Score();
-    private final Health health = new StaticHealth(10) {
+    private final float startingTime;
+    private final Health health = new StaticHealth(4) {
     };
 
-    public GameplayViewModel(Level level, GameplayScreen gameplayScreen) {
+    public GameplayViewModel(Level level, GameplayScreen gameplayScreen, float startingTime) {
         this.gameplayScreen = gameplayScreen;
         this.level = level;
+        this.startingTime = startingTime;
         notes = level.getNotes();
         speed = level.getSpeed();
         columnCount = level.getColumnCount();
@@ -49,21 +51,16 @@ public class GameplayViewModel {
                 firstToHit[i]++;
                 missedSprites.add(noteSprites.get(i).get(0));
                 noteSprites.get(i).removeIndex(0);
-                score.missed_update();
+                score.missedUpdate();
                 health.decreaseHealth();
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).getHitTime() - 8000/speed < currentTime){
                 Sprite sprite = new Sprite(gameplayScreen.noteTexture);
                 sprite.setSize(gameplayScreen.columnWidth, gameplayScreen.columnWidth/4);
-                if(columnCount%2 == 1){
-                    sprite.setCenterX(worldWidth/2 + gameplayScreen.columnWidth*(i- (float) columnCount /2));
-                }
-                else{
-                    sprite.setX(worldWidth/2 + gameplayScreen.columnWidth*(i- (float) columnCount /2));
-                }
+                sprite.setX(worldWidth/2 + gameplayScreen.columnWidth*(i-(float)columnCount/2));
                 if(notes.get(i).get(firstToAdd[i]).getHitTime() - 8000/speed <= 0)
-                    sprite.setY(0.2f*worldHeight+notes.get(i).get(firstToAdd[i]).getHitTime()*speed/1000);
+                    sprite.setY(0.2f*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
                 else sprite.setY(worldHeight);
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
@@ -98,8 +95,8 @@ public class GameplayViewModel {
         return HitResult.NONE;
     }
 
-    public int getScore() {
-        return score.getScore();
+    public Score getScore() {
+        return score;
     }
     public int getHealth(){
         return health.getHealth();
@@ -116,5 +113,8 @@ public class GameplayViewModel {
     }
     public ArrayList<Array<Sprite>> getNoteSprites() {
         return noteSprites;
+    }
+    public Level getLevel() {
+        return level;
     }
 }

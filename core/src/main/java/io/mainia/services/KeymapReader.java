@@ -19,7 +19,7 @@ public class KeymapReader {
     }
     public List<Integer> readKeymap(int columnCount) throws IOException {
         Scanner scanner = new Scanner(file);
-        List<Integer> keymap = new ArrayList<Integer>();
+        List<Integer> keymap = new ArrayList<>();
         String line;
         while (scanner.hasNextLine()) {
             line = scanner.nextLine();
@@ -31,6 +31,6 @@ public class KeymapReader {
                 return keymap;
             }
         }
-        throw new WrongFileFormatException("Keymap for coulmncount " + columnCount + " not found");
+        throw new WrongFileFormatException("Keymap for columnCount " + columnCount + " not found");
     }
 }
