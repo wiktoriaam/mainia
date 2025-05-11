@@ -46,7 +46,7 @@ public class LevelFileReader {
             else if(line.trim().equals("[Speed]")){
                 line = scanner.nextLine();
                 line = line.trim();
-                speed = Integer.parseInt(line);
+                speed = Float.valueOf(line);
             }
             else if(line.trim().equals("[HitObjects]")){
                 line = scanner.nextLine();

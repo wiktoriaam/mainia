@@ -59,7 +59,7 @@ public class GameplayViewModel {
                 Sprite sprite = new Sprite(gameplayScreen.noteTexture);
                 sprite.setSize(gameplayScreen.columnWidth, gameplayScreen.columnWidth/4);
                 sprite.setX(worldWidth/2 + gameplayScreen.columnWidth*(i-(float)columnCount/2));
-                if(notes.get(i).get(firstToAdd[i]).getHitTime() - 8000/speed <= 0)
+                if((notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime) - 8000/speed <= 0)
                     sprite.setY(0.2f*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
                 else sprite.setY(worldHeight);
                 noteSprites.get(i).add(sprite);
@@ -80,15 +80,15 @@ public class GameplayViewModel {
             firstToHit[column] = -1;
         else firstToHit[column]++;
         noteSprites.get(column).removeIndex(0);
-        if(Math.abs(time -  hitTime)<=200) {
+        if(Math.abs(time -  hitTime)<=100) {
             score.update(HitResult.PERFECT);
             return HitResult.PERFECT;
         }
-        if(Math.abs(time - hitTime)<=500) {
+        if(Math.abs(time - hitTime)<=200) {
             score.update(HitResult.GREAT);
             return HitResult.GREAT;
         }
-        if(Math.abs(time - hitTime)<=1000){
+        if(Math.abs(time - hitTime)<=300){
             score.update(HitResult.OK);
             return HitResult.OK;
         }
