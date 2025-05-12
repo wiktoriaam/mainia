@@ -26,7 +26,8 @@ public class KeymapReader {
             if(line.startsWith(String.valueOf(columnCount))){
                 String[] keys = line.split(" ");
                 for(int i = 2; i < keys.length; i++){
-                    keymap.add(Input.Keys.valueOf(keys[i]));
+                    if(keys[i].trim().equals("SPACE"))keymap.add(62);
+                    else keymap.add(Input.Keys.valueOf(keys[i].trim()));
                 }
                 return keymap;
             }

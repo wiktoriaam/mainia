@@ -1,0 +1,18 @@
+[General]
+ColumnCount=1
+Length=9
+Music=turkish_march.ogg
+
+[Speed]
+2
+
+[HitObjects]
+h, 0, 1000
+h, 0, 1500
+h, 0, 2000
+h, 0, 2200
+h, 0, 2900
+h, 0, 3400
+h, 0, 3900
+h, 0, 4400
+h, 0, 4600

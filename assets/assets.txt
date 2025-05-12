@@ -1,5 +1,7 @@
 column.png
 hit_note.png
+levelfiles/easy.mainiabm
+levelfiles/oneColumnLevel.mainiabm
 levelfiles/poziom.mainiabm
 music/Cancan.ogg
 music/turkish_march.ogg

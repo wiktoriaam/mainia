@@ -2,16 +2,26 @@ package io.mainia.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
 import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
+
+import java.util.ArrayList;
 
 public class LevelSelectScreen implements Screen {
 
@@ -19,6 +29,7 @@ public class LevelSelectScreen implements Screen {
     private Stage stage;
     private LevelFileReader levelFileReader;
     private KeymapReader keymapReader;
+    private SelectBox<String> selectBox;
 
     public LevelSelectScreen(final Mainia game) {
         this.game = game;
@@ -27,17 +38,45 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void show() {
-
+        //styles for selectbox and button
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = game.getFont();
         style.fontColor = Color.WHITE;
-        TextButton button = new TextButton("Default level", style);
+
+        SelectBox.SelectBoxStyle selectBoxStyle = new SelectBox.SelectBoxStyle();
+        selectBoxStyle.font = game.getFont();
+        selectBoxStyle.fontColor = Color.WHITE;
+        //selectBoxStyle.background = new TextureRegionDrawable(new Texture("hit_note.png"));
+        List.ListStyle listStyle = new List.ListStyle();
+        listStyle.font = game.getFont();
+        listStyle.fontColorSelected = Color.BLUE;
+        listStyle.fontColorUnselected = Color.RED;
+        listStyle.selection = new TextureRegionDrawable(new Texture("hit_note.png"));
+        selectBoxStyle.listStyle = listStyle;
+        selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
+        selectBoxStyle.scrollStyle.background = new TextureRegionDrawable(new Texture("hit_note.png"));
+
+
+
+        //actual selectbox
+        selectBox = new SelectBox<>(selectBoxStyle);
+        selectBox.setAlignment(Align.center);
+        selectBox.setPosition(3.5f,7);
+        selectBox.setSize(3,2);
+        FileHandle levels = Gdx.files.internal("levelfiles/");
+        Array<String> levelNames = new Array<>();
+        for(FileHandle level : levels.list()) {levelNames.add(level.nameWithoutExtension());}
+        selectBox.setItems(levelNames);
+
+        //actual button
+        TextButton button = new TextButton("Play", style);
         button.setSize(1,1);
-        button.setPosition(5,5);
+        button.setPosition(5,5, Align.center);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                levelFileReader = new LevelFileReader("levelfiles/poziom.mainiabm");
+                String levelPath = "levelfiles/" + selectBox.getSelected() + ".mainiabm";
+                levelFileReader = new LevelFileReader(levelPath);
                 keymapReader = new KeymapReader();
                 try {
                     Level level = levelFileReader.readLevel();
@@ -49,8 +88,11 @@ public class LevelSelectScreen implements Screen {
                 }
             }
         });
+
         Gdx.input.setInputProcessor(stage);
+        stage.addActor(selectBox);
         stage.addActor(button);
+
     }
 
     @Override
@@ -58,6 +100,7 @@ public class LevelSelectScreen implements Screen {
         ScreenUtils.clear(Color.BLACK);
         stage.act(v);
         stage.draw();
+
     }
 
     @Override

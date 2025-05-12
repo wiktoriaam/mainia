@@ -80,8 +80,8 @@ public class GameplayScreen implements Screen {
             sprite.draw(game.getBatch());
         }
         game.getBatch().draw(perfectWindowTexture, worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
-        game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().getScore(), 1,9);
-        game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 1, 8);
+        game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().getScore(), 0,9);
+        game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 0, 8);
         game.getBatch().end();
         for(int i = 0; i < keymap.size(); i++) {
             if (Gdx.input.isKeyJustPressed(keymap.get(i))) {gameplayViewModel.onPressUpdate(i,currentTime);}
