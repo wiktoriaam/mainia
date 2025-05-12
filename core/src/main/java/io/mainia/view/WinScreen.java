@@ -62,7 +62,7 @@ public class WinScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.CHARTREUSE);
+        ScreenUtils.clear(Color.valueOf("006400"));
         stage.act(delta);
         stage.draw();
         game.getBatch().begin();
