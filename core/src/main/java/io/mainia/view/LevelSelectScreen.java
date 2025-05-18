@@ -21,12 +21,15 @@ import io.mainia.model.Level;
 import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
 
-import java.util.ArrayList;
 
 public class LevelSelectScreen implements Screen {
+    private static final String selectBoxTexturePath = "hit_note.png";
+    private static final String listBackgroundTexturePath = "hit_note.png";
+    private static final String levelFilesPath = "levelfiles/";
+    private static final String levelExtension = ".mainiabm";
 
     final Mainia game;
-    private Stage stage;
+    private final Stage stage;
     private LevelFileReader levelFileReader;
     private KeymapReader keymapReader;
     private SelectBox<String> selectBox;
@@ -51,10 +54,10 @@ public class LevelSelectScreen implements Screen {
         listStyle.font = game.getFont();
         listStyle.fontColorSelected = Color.BLUE;
         listStyle.fontColorUnselected = Color.RED;
-        listStyle.selection = new TextureRegionDrawable(new Texture("hit_note.png"));
+        listStyle.selection = new TextureRegionDrawable(new Texture(selectBoxTexturePath));
         selectBoxStyle.listStyle = listStyle;
         selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
-        selectBoxStyle.scrollStyle.background = new TextureRegionDrawable(new Texture("hit_note.png"));
+        selectBoxStyle.scrollStyle.background = new TextureRegionDrawable(new Texture(listBackgroundTexturePath));
 
 
 
@@ -63,7 +66,7 @@ public class LevelSelectScreen implements Screen {
         selectBox.setAlignment(Align.center);
         selectBox.setPosition(3.5f,7);
         selectBox.setSize(3,2);
-        FileHandle levels = Gdx.files.internal("levelfiles/");
+        FileHandle levels = Gdx.files.internal(levelFilesPath);
         Array<String> levelNames = new Array<>();
         for(FileHandle level : levels.list()) {levelNames.add(level.nameWithoutExtension());}
         selectBox.setItems(levelNames);
@@ -75,7 +78,7 @@ public class LevelSelectScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                String levelPath = "levelfiles/" + selectBox.getSelected() + ".mainiabm";
+                String levelPath = levelFilesPath + selectBox.getSelected() + levelExtension;
                 levelFileReader = new LevelFileReader(levelPath);
                 keymapReader = new KeymapReader();
                 try {

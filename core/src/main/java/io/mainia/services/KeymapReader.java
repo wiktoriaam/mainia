@@ -10,9 +10,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class KeymapReader {
+    public static final String settingsPath = "settings/settings.mainia";
+
     private final File file;
     public KeymapReader(){
-        file = new File("settings/settings.mainia");
+        file = new File(settingsPath);
     }
     public KeymapReader(String filePath){
         file = new File(filePath);

@@ -9,6 +9,8 @@ import io.mainia.view.MainMenuScreen;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Mainia extends Game {
+    public final static float worldWidth = 10;
+    public final static float worldHeight = 10;
 
     private FitViewport viewport;
     private SpriteBatch batch;
@@ -16,7 +18,7 @@ public class Mainia extends Game {
 
     @Override
     public void create() {
-        viewport = new FitViewport(10,10);
+        viewport = new FitViewport(worldWidth,worldHeight);
         font = new BitmapFont();
         batch = new SpriteBatch();
         font.setUseIntegerPositions(false);

@@ -4,10 +4,10 @@ import java.util.List;
 
 public class Level {
     private final List<List<Note>> notes;
-    private float speed;
+    private final float speed;
     private final short columnCount;
     private final float length;
-    private String musicFilename;
+    private final String musicFilename;
 
     public Level(float speed, List<List<Note>> notes, short columnCount, float length, String musicFilename) {
         this.speed = speed;

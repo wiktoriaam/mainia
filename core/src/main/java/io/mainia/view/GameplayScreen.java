@@ -10,16 +10,19 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.mainia.Mainia;
-import io.mainia.model.HitNote;
 import io.mainia.model.Level;
-import io.mainia.model.Note;
 import io.mainia.viewmodel.GameplayViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class GameplayScreen implements Screen {
+
+    public final static String noteTexturePath = "hit_note.png";
+    public final static String perfectWindowTexturePath = "perfect_window.png";
+    public final static String columnTexturePath = "column.png";
+    public final static String musicPath = "music/";
+    public final static float columnWidth = 0.75f;
+    public final static float startTime = -3000;
 
     private final Mainia game;
     private final GameplayViewModel gameplayViewModel;
@@ -27,20 +30,17 @@ public class GameplayScreen implements Screen {
     private final Texture perfectWindowTexture;
     private final Texture columnTexture;
     private float currentTime;
-    private float startTime = -3000;
-    public float columnWidth;
     private final List<Integer> keymap;
     private final Music music;
 
     public GameplayScreen(final Mainia game, final Level level, final List<Integer> keymap) {
         this.game = game;
         gameplayViewModel = new GameplayViewModel(level, this, startTime);
-        noteTexture  = new Texture("hit_note.png");
-        perfectWindowTexture = new Texture("perfect_window.png");
-        columnTexture = new Texture("column.png");
-        columnWidth = 0.75f;
+        noteTexture  = new Texture(noteTexturePath);
+        perfectWindowTexture = new Texture(perfectWindowTexturePath);
+        columnTexture = new Texture(columnTexturePath);
         this.keymap = keymap;
-        music = Gdx.audio.newMusic(Gdx.files.internal("music/"+gameplayViewModel.getLevel().getMusicFilename()));
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+gameplayViewModel.getLevel().getMusicFilename()));
         music.setLooping(false);
         currentTime = startTime;
     }
@@ -55,6 +55,7 @@ public class GameplayScreen implements Screen {
         currentTime+=1000*delta;
         if(currentTime >= 0 && currentTime < 1000*delta) music.play();
         int columnCount = gameplayViewModel.getColumnCount();
+        //update aktualnie wyswietlanych node'ow
         gameplayViewModel.update(currentTime);
 
         if(gameplayViewModel.getHealth() <= 0) fail();
@@ -64,7 +65,7 @@ public class GameplayScreen implements Screen {
         float worldWidth = game.getViewport().getWorldWidth();
         game.getViewport().apply();
         game.getBatch().setProjectionMatrix(game.getViewport().getCamera().combined);
-
+        //wyswietlanie node'ow
         game.getBatch().begin();
         for(int i=0; i<columnCount; i++) {
             game.getBatch().draw(columnTexture, worldWidth/2 - columnWidth*columnCount/2 + i*columnWidth, 0, columnWidth, worldHeight);
@@ -83,6 +84,7 @@ public class GameplayScreen implements Screen {
         game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().getScore(), 0,9);
         game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 0, 8);
         game.getBatch().end();
+        //onPressUpdate w momencie kliknięcia
         for(int i = 0; i < keymap.size(); i++) {
             if (Gdx.input.isKeyJustPressed(keymap.get(i))) {gameplayViewModel.onPressUpdate(i,currentTime);}
         }
