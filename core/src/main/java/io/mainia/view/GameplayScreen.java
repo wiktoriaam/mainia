@@ -35,8 +35,8 @@ public class GameplayScreen implements Screen {
 
     public GameplayScreen(final Mainia game, final Level level, final List<Integer> keymap) {
         this.game = game;
-        gameplayViewModel = new GameplayViewModel(level, this, startTime);
         noteTexture  = new Texture(noteTexturePath);
+        gameplayViewModel = new GameplayViewModel(level, startTime, getViewPort().getWorldHeight(), getViewPort().getWorldWidth(), columnWidth, noteTexture);
         perfectWindowTexture = new Texture(perfectWindowTexturePath);
         columnTexture = new Texture(columnTexturePath);
         this.keymap = keymap;

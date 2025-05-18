@@ -1,5 +1,6 @@
 package io.mainia.viewmodel;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import io.mainia.model.*;
@@ -9,22 +10,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameplayViewModel {
-    private final GameplayScreen gameplayScreen;
+    //level info
     private final Level level;
     private final List<List<Note>> notes;
     private final float speed;
     private final int columnCount;
+    //sprites(temporary) TO DO: switch location of the sprites array to view
     private ArrayList<Array<Sprite>> noteSprites = new ArrayList<>();
     private Array<Sprite> missedSprites = new Array<>();
     private int[] firstToHit;
     private int[] firstToAdd;
     private final Score score = new Score();
     private final float startingTime;
+    private float worldHeight;
+    private float worldWidth;
+    private float columnWidth;
+    private Texture noteTexture;
     private final Health health = new StaticHealth(4) {
     };
 
-    public GameplayViewModel(Level level, GameplayScreen gameplayScreen, float startingTime) {
-        this.gameplayScreen = gameplayScreen;
+    public GameplayViewModel(Level level, float startingTime, float worldHeight, float worldWidth, float columnWidth, Texture noteTexture) {
         this.level = level;
         this.startingTime = startingTime;
         notes = level.getNotes();
@@ -39,12 +44,13 @@ public class GameplayViewModel {
                 firstToAdd[i] = -1;
             }
         }
-
+        this.worldHeight = worldHeight;
+        this.worldWidth = worldWidth;
+        this.columnWidth = columnWidth;
+        this.noteTexture = noteTexture;
     }
 
     public void update(float currentTime){
-        float worldHeight = gameplayScreen.getViewPort().getWorldHeight();
-        float worldWidth = gameplayScreen.getViewPort().getWorldWidth();
         for(int i = 0; i < columnCount; i++){
             //missed notes
             while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).getHitTime() + 1000/speed < currentTime){
@@ -56,9 +62,9 @@ public class GameplayViewModel {
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).getHitTime() - 8000/speed < currentTime){
-                Sprite sprite = new Sprite(gameplayScreen.noteTexture);
-                sprite.setSize(gameplayScreen.columnWidth, gameplayScreen.columnWidth/4);
-                sprite.setX(worldWidth/2 + gameplayScreen.columnWidth*(i-(float)columnCount/2));
+                Sprite sprite = new Sprite(noteTexture);
+                sprite.setSize(columnWidth, columnWidth/4);
+                sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
                 if((notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime) - 8000/speed <= 0)
                     sprite.setY(0.2f*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
                 else sprite.setY(worldHeight);
