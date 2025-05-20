@@ -15,7 +15,7 @@ public class GameplayViewModel {
     private final List<List<Note>> notes;
     private final float speed;
     private final int columnCount;
-    //sprites(temporary) TO DO: switch location of the sprites array to view
+    //sprites(temporary) TODO: switch location of the sprites array to view
     private ArrayList<Array<Sprite>> noteSprites = new ArrayList<>();
     private Array<Sprite> missedSprites = new Array<>();
     private int[] firstToHit;
@@ -78,27 +78,16 @@ public class GameplayViewModel {
         }
     }
 
-    public HitResult onPressUpdate(int column, float time){
-        if(firstToHit[column] == -1){return HitResult.NONE;}
-        float hitTime = notes.get(column).get(firstToHit[column]).getHitTime();
-        if(time <  hitTime - 1000){return HitResult.NONE;}
-        if(firstToHit[column] == notes.get(column).size() - 1)
-            firstToHit[column] = -1;
-        else firstToHit[column]++;
-        noteSprites.get(column).removeIndex(0);
-        if(Math.abs(time -  hitTime)<=100) {
-            score.update(HitResult.PERFECT);
-            return HitResult.PERFECT;
+    public void onPressUpdate(int column, float time){
+        if(firstToHit[column] == -1){return;}
+        HitResult result = notes.get(column).get(firstToHit[column]).hitCheck(time);
+        score.update(result);
+        if(result != HitResult.NONE) {
+            if (firstToHit[column] == notes.get(column).size() - 1)
+                firstToHit[column] = -1;
+            else firstToHit[column]++;
+            noteSprites.get(column).removeIndex(0);
         }
-        if(Math.abs(time - hitTime)<=200) {
-            score.update(HitResult.GREAT);
-            return HitResult.GREAT;
-        }
-        if(Math.abs(time - hitTime)<=300){
-            score.update(HitResult.OK);
-            return HitResult.OK;
-        }
-        return HitResult.NONE;
     }
 
     public Score getScore() {

@@ -14,6 +14,11 @@ public class SliderNote implements Note {
         return hitTime;
     }
 
+    @Override
+    public HitResult hitCheck(float time) {
+        return null;
+    }
+
     public float getReleaseTime() {
         return releaseTime;
     }
