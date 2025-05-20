@@ -28,6 +28,7 @@ public class GameplayViewModel {
     private Texture noteTexture;
     private final Health health = new StaticHealth(4) {
     };
+    private final float perfectHitHeight;
 
     public GameplayViewModel(Level level, float startingTime, float worldHeight, float worldWidth, float columnWidth, Texture noteTexture) {
         this.level = level;
@@ -48,6 +49,7 @@ public class GameplayViewModel {
         this.worldWidth = worldWidth;
         this.columnWidth = columnWidth;
         this.noteTexture = noteTexture;
+        perfectHitHeight = 0.2f;
     }
 
     public void update(float currentTime){
@@ -61,12 +63,12 @@ public class GameplayViewModel {
                 health.decreaseHealth();
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
-            while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).getHitTime() - 8000/speed < currentTime){
+            while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).getHitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Sprite sprite = new Sprite(noteTexture);
                 sprite.setSize(columnWidth, columnWidth/4);
                 sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
-                if((notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime) - 8000/speed <= 0)
-                    sprite.setY(0.2f*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
+                if((notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
+                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
                 else sprite.setY(worldHeight);
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
