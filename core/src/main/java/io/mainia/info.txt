@@ -1,0 +1,6 @@
+->ostatnie zmiany: konstruktor GameplayViewModel i GameplayScreen aby dało się wstrzymywać grę
+    i przekazywać GameplayViewModel trwającej do GameplayScreen po wznowieniu gry: GŁÓWNA ZMIANA to
+    viewmodel jako argument do konstruktora GameplayScreen
+
+->początkowy offset znajduje się teraz w pliku z levelem!!
+

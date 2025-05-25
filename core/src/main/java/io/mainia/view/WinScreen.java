@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
 import io.mainia.model.Score;
+import io.mainia.viewmodel.GameplayViewModel;
 
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class WinScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, level, keymap));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime, -level.startTime, 0));
                 dispose();
             }
         });

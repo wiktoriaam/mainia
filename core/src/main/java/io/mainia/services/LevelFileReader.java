@@ -23,6 +23,7 @@ public class LevelFileReader {
         short columnCount = -1;
         float speed = -1;
         float length = -1;
+        float startTime = -1;
         String musicFilename = null;
         while(scanner.hasNextLine()){
             line = scanner.nextLine();
@@ -42,6 +43,11 @@ public class LevelFileReader {
                 line = line.trim();
                 String[] split2 = line.split("=");
                 musicFilename = split2[1];
+
+                line=scanner.nextLine();
+                line=line.trim();
+                String[] split3 = line.split("=");
+                startTime = Float.parseFloat(split3[1]);
             }
             else if(line.trim().equals("[Speed]")){
                 line = scanner.nextLine();
@@ -67,8 +73,9 @@ public class LevelFileReader {
         if(columnCount==-1) throw new WrongFileFormatException("ColumnCount not found");
         if(speed==-1) throw new WrongFileFormatException("Speed not found");
         if(length==-1) throw new WrongFileFormatException("Length not found");
+        if(startTime==-1) throw new WrongFileFormatException("StartTime not found");
 
-        return new Level(speed, notes, columnCount, length, musicFilename);
+        return new Level(speed, notes, columnCount, length, musicFilename, startTime);
 
     }
 

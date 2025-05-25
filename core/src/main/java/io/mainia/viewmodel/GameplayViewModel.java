@@ -22,17 +22,13 @@ public class GameplayViewModel {
     private int[] firstToAdd;
     private final Score score = new Score();
     private final float startingTime;
-    private float worldHeight;
-    private float worldWidth;
-    private float columnWidth;
-    private Texture noteTexture;
     private final Health health = new StaticHealth(4) {
     };
     private final float perfectHitHeight;
 
-    public GameplayViewModel(Level level, float startingTime, float worldHeight, float worldWidth, float columnWidth, Texture noteTexture) {
+    public GameplayViewModel(Level level) {
         this.level = level;
-        this.startingTime = startingTime;
+        this.startingTime = level.startTime;
         notes = level.getNotes();
         speed = level.getSpeed();
         columnCount = level.getColumnCount();
@@ -45,14 +41,10 @@ public class GameplayViewModel {
                 firstToAdd[i] = -1;
             }
         }
-        this.worldHeight = worldHeight;
-        this.worldWidth = worldWidth;
-        this.columnWidth = columnWidth;
-        this.noteTexture = noteTexture;
         perfectHitHeight = 0.2f;
     }
 
-    public void update(float currentTime){
+    public void update(float currentTime, Texture noteTexture, float worldWidth, float worldHeight, float columnWidth) {
         for(int i = 0; i < columnCount; i++){
             //missed notes
             while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).getHitTime() + 1000/speed < currentTime){
