@@ -81,10 +81,9 @@ public class LevelSelectScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 String levelPath = levelFilesPath + selectBox.getSelected() + levelExtension;
                 levelFileReader = new LevelFileReader(levelPath);
-                keymapReader = new KeymapReader();
                 try {
                     Level level = levelFileReader.readLevel();
-                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.getColumnCount()), level.startTime, -level.startTime, 0));
+                    game.setScreen(new SettingsScreen(game, level.getColumnCount(), level));
                     dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

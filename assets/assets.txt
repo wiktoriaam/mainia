@@ -1,5 +1,6 @@
 column.png
 hit_note.png
+levelfiles/allColumnsTest.mainiabm
 levelfiles/easy.mainiabm
 levelfiles/oneColumnLevel.mainiabm
 levelfiles/poziom.mainiabm

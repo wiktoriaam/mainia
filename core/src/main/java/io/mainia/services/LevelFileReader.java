@@ -30,8 +30,8 @@ public class LevelFileReader {
             if(line.isBlank()) continue;
             if(line.trim().equals("[General]")){
                 line = scanner.nextLine();//wczytywanie ilosci kolumn
-                line = line.trim();
-                columnCount = (short) (line.charAt(12) - '0');
+                String tmp[] = line.split("=");
+                columnCount = Short.parseShort(tmp[1]);
                 for(int i = 0; i < columnCount; i++) notes.add(new ArrayList<>());
 
                 line = scanner.nextLine(); //wczytywanie dlugosci

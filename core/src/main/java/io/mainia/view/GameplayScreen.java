@@ -48,6 +48,8 @@ public class GameplayScreen implements Screen {
         this.keymap = keymap;
         this.startTime = startTime;
         currentTime = startTime;
+        for(int i : keymap) {System.out.println(i);}
+        System.out.println(Input.Keys.SPACE);
 
         //grafika i audio
         this.musicStartTime = musicStartTime;
@@ -117,7 +119,7 @@ public class GameplayScreen implements Screen {
         }
 
         //sprawdzenie czy wciśnięto Esc - jesli tak to PauseScreen
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && currentTime-startTime>=musicStartTime) {
             music.pause();
             game.setScreen(new PauseScreen(game, gameplayViewModel, keymap, currentTime));
         }
