@@ -12,16 +12,16 @@ public class KeymapReader {
     public static Map<String, Integer> map = new HashMap<>();
     static{//potrzebne zeby potem ładnie w pliku zapisywać samą nazwę klawisza i nie robić if ani switch
         map.put("ANY_KEY", Input.Keys.ANY_KEY);
-        map.put("NUM_0", Input.Keys.NUM_0);
-        map.put("NUM_1", Input.Keys.NUM_1);
-        map.put("NUM_2", Input.Keys.NUM_2);
-        map.put("NUM_3", Input.Keys.NUM_3);
-        map.put("NUM_4", Input.Keys.NUM_4);
-        map.put("NUM_5", Input.Keys.NUM_5);
-        map.put("NUM_6", Input.Keys.NUM_6);
-        map.put("NUM_7", Input.Keys.NUM_7);
-        map.put("NUM_8", Input.Keys.NUM_8);
-        map.put("NUM_9", Input.Keys.NUM_9);
+        map.put("0", Input.Keys.NUM_0);
+        map.put("1", Input.Keys.NUM_1);
+        map.put("2", Input.Keys.NUM_2);
+        map.put("3", Input.Keys.NUM_3);
+        map.put("4", Input.Keys.NUM_4);
+        map.put("5", Input.Keys.NUM_5);
+        map.put("6", Input.Keys.NUM_6);
+        map.put("7", Input.Keys.NUM_7);
+        map.put("8", Input.Keys.NUM_8);
+        map.put("9", Input.Keys.NUM_9);
         map.put("A", Input.Keys.A);
         map.put("B", Input.Keys.B);
         map.put("C", Input.Keys.C);
