@@ -1,0 +1,11 @@
+[General]
+ColumnCount=4
+Length=5
+Music=turkish_march.ogg
+StartTime=-3000
+
+[Speed]
+2
+
+[HitObjects]
+s, 0, 0, 500

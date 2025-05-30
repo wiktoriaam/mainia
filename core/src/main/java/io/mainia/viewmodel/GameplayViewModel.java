@@ -8,6 +8,10 @@ import io.mainia.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static io.mainia.Mainia.worldHeight;
+import static io.mainia.Mainia.worldWidth;
+import static io.mainia.view.GameplayScreen.columnWidth;
+
 public class GameplayViewModel {
     //level info
     private final Level level;
@@ -44,7 +48,7 @@ public class GameplayViewModel {
         else health = new DynamicHealth(level.healthAmount());
     }
 
-    public void update(float currentTime, Texture noteTexture, float worldWidth, float worldHeight, float columnWidth) {
+    public void update(float currentTime, Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture) {
         for(int i = 0; i < columnCount; i++){
             //missed notes
             while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).hitTime() + 1000/speed < currentTime){
@@ -55,13 +59,19 @@ public class GameplayViewModel {
                 health.updateHealth(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
+            NoteSpriteBuilder noteSpriteBuilder = new NoteSpriteBuilder(noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture, columnWidth, level);
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
-                Sprite sprite = new Sprite(noteTexture);
-                sprite.setSize(columnWidth, columnWidth/4);
-                sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
-                if((notes.get(i).get(firstToAdd[i]).hitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
-                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).hitTime() - startingTime)*speed/1000);
-                else sprite.setY(worldHeight);
+                Note note = notes.get(i).get(firstToAdd[i]);
+//                Sprite sprite = new Sprite(noteTexture);
+//                sprite.setSize(columnWidth, columnWidth/4);
+//                sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
+//                if((notes.get(i).get(firstToAdd[i]).hitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
+//                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).hitTime() - startingTime)*speed/1000);
+//                else sprite.setY(worldHeight);
+                Sprite sprite = null;
+                if(note instanceof HitNote hit) {
+                    sprite = noteSpriteBuilder.buildHit(hit, i, currentTime);
+                }
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
                 if(notes.get(i).size() == firstToAdd[i]) firstToAdd[i] = -1;

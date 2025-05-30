@@ -28,8 +28,8 @@ public class GameplayScreen implements Screen {
     public final static String columnTexturePath = "column.png";
     public final static String musicPath = "music/";
     public final static float columnWidth = 0.75f;
-    public static float worldHeight;
-    public static float worldWidth;
+    public final static float perfectHitHeight = 0.2f;
+
 
     //czas w ms poczatkowy ustawiany w konstruktorze(zwykle ujemny, znajduje sie teraz w pliku z levelem)
     public final float startTime;
@@ -48,6 +48,8 @@ public class GameplayScreen implements Screen {
     private float currentTime;
     private final List<Integer> keymap;
     private final Music music;
+//    public float worldHeight;
+//    public float worldWidth;
 
     public GameplayScreen(final Mainia game, final GameplayViewModel gameplayViewModel, final List<Integer> keymap, float startTime, float musicStartTime, float musicTimeStamp) {
         //gra
@@ -62,8 +64,8 @@ public class GameplayScreen implements Screen {
         //grafika i audio
         this.musicStartTime = musicStartTime;
         this.musicTimeStamp = musicTimeStamp;
-        worldHeight = game.getViewport().getWorldHeight();
-        worldWidth = game.getViewport().getWorldWidth();
+//        worldHeight = game.getViewport().getWorldHeight();
+//        worldWidth = game.getViewport().getWorldWidth();
         noteTexture  = new Texture(noteTexturePath);
         sliderStartTexture = new Texture(sliderStartTexturePath);
         sliderMiddleTexture = new Texture(sliderMiddleTexturePath);
@@ -89,7 +91,7 @@ public class GameplayScreen implements Screen {
         }
         int columnCount = gameplayViewModel.getColumnCount();
         //update aktualnie wyswietlanych node'ow
-        gameplayViewModel.update(currentTime, noteTexture, worldWidth, worldHeight, columnWidth);
+        gameplayViewModel.update(currentTime, noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture);
 
         if(gameplayViewModel.getHealth() <= 0) fail();
         if(currentTime>=gameplayViewModel.getLevel().length()*1000) win();
@@ -102,7 +104,7 @@ public class GameplayScreen implements Screen {
         //wyswietlanie node'ow
         game.getBatch().begin();
         for(int i=0; i<columnCount; i++) {
-            game.getBatch().draw(columnTexture, worldWidth/2 - columnWidth*columnCount/2 + i*columnWidth, 0, columnWidth, worldHeight);
+            game.getBatch().draw(columnTexture, Mainia.worldWidth/2 - columnWidth*columnCount/2 + i*columnWidth, 0, columnWidth, Mainia.worldHeight);
         }
         for(Array<Sprite> arr : gameplayViewModel.getNoteSprites()) {
             for (Sprite sprite : arr) {
@@ -114,7 +116,7 @@ public class GameplayScreen implements Screen {
             sprite.translateY(-gameplayViewModel.getSpeed()*delta);
             sprite.draw(game.getBatch());
         }
-        game.getBatch().draw(perfectWindowTexture, worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
+        game.getBatch().draw(perfectWindowTexture, Mainia.worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
         game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().currentScore(), 0,9);
         game.getFont().draw(game.getBatch(), "Health remaining:"+round.format(gameplayViewModel.getHealth()), 0, 8);
         game.getBatch().end();

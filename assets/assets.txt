@@ -4,6 +4,7 @@ levelfiles/allColumnsTest.mainiabm
 levelfiles/easy.mainiabm
 levelfiles/oneColumnLevel.mainiabm
 levelfiles/poziom.mainiabm
+levelfiles/sliderTest.mainiabm
 music/Cancan.ogg
 music/turkish_march.ogg
 perfect_window.png
