@@ -90,6 +90,9 @@ public class LevelSelectScreen implements Screen {
                        ResultsReader rr = new ResultsReader(plik);
                        results = rr.readResults();
                    }
+                   else{
+                       results = new ArrayList<>();
+                   }
                }
                catch(Exception e) {
 
@@ -123,10 +126,16 @@ public class LevelSelectScreen implements Screen {
         stage.addActor(button);
 
         try{
+            File resPath = new File(resultsPath);
+            resPath.mkdirs();
+
             File plik = new File(resultsPath + selectBox.getSelected() + resultExtension);
             if (plik.exists()) {
                 ResultsReader rr = new ResultsReader(plik);
                 results = rr.readResults();
+            }
+            else{
+                results = new ArrayList<>();
             }
         }
         catch(Exception e) {
