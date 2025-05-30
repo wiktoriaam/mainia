@@ -13,9 +13,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.mainia.Mainia;
 import io.mainia.viewmodel.GameplayViewModel;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class GameplayScreen implements Screen {
+
+    private final DecimalFormat round = new DecimalFormat("#.0");
 
     public final static String noteTexturePath = "hit_note.png";
     public final static String perfectWindowTexturePath = "perfect_window.png";
@@ -58,7 +61,7 @@ public class GameplayScreen implements Screen {
         noteTexture  = new Texture(noteTexturePath);
         perfectWindowTexture = new Texture(perfectWindowTexturePath);
         columnTexture = new Texture(columnTexturePath);
-        music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+gameplayViewModel.getLevel().NameOfMusicFile()));
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+ gameplayViewModel.getLevel().musicFilename()));
         music.setLooping(false);
     }
 
@@ -104,7 +107,7 @@ public class GameplayScreen implements Screen {
         }
         game.getBatch().draw(perfectWindowTexture, worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
         game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().currentScore(), 0,9);
-        game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 0, 8);
+        game.getFont().draw(game.getBatch(), "Health remaining:"+round.format(gameplayViewModel.getHealth()), 0, 8);
         game.getBatch().end();
         //KONIEC WYŚWIETLANIA
 

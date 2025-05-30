@@ -25,6 +25,8 @@ public class LevelFileReader {
         float length = -1;
         float startTime = -1;
         String musicFilename = null;
+        float healthAmount = -1;
+        boolean stat=false;
         while(scanner.hasNextLine()){
             line = scanner.nextLine();
             if(line.isBlank()) continue;
@@ -48,6 +50,15 @@ public class LevelFileReader {
                 line=line.trim();
                 String[] split3 = line.split("=");
                 startTime = Float.parseFloat(split3[1]);
+            }
+            else if(line.trim().equals("[Health]")){
+                line = scanner.nextLine();
+                line = line.trim();
+                if(line.equals("Static")) stat = true;
+                else if(!line.equals("Dynamic")) throw new WrongFileFormatException("Health type doesn't exists");
+                line = scanner.nextLine();
+                line = line.trim();
+                healthAmount = Float.parseFloat(line);
             }
             else if(line.trim().equals("[Speed]")){
                 line = scanner.nextLine();
@@ -75,7 +86,7 @@ public class LevelFileReader {
         if(length==-1) throw new WrongFileFormatException("Length not found");
         if(startTime==-1) throw new WrongFileFormatException("StartTime not found");
 
-        return new Level(speed, notes, columnCount, length, musicFilename, startTime);
+        return new Level(speed, notes, columnCount, length, musicFilename, startTime,healthAmount,stat);
 
     }
 

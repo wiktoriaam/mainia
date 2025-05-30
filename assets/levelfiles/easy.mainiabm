@@ -4,6 +4,10 @@ Length=6
 Music=Cancan.ogg
 StartTime=-3000
 
+[Health]
+Static
+4
+
 [Speed]
 2
 

@@ -46,7 +46,7 @@ public class PauseScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime, -gameplayViewModel.getLevel().startTime, 0));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime(), -gameplayViewModel.getLevel().startTime(), 0));
                 dispose();
             }
         });

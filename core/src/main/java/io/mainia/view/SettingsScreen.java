@@ -75,7 +75,7 @@ public class SettingsScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     KeymapReader keymapReader = new KeymapReader();
-                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.columnCount()), level.startTime, -level.startTime, 0));
+                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.columnCount()), level.startTime(), -level.startTime(), 0));
                     dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

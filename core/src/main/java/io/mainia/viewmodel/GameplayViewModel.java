@@ -21,14 +21,13 @@ public class GameplayViewModel {
     private int[] firstToAdd;
     private final Score score = new Score();
     private final float startingTime;
-    private final Health health = new StaticHealth(4) {
-    };
+    private final Health health;
     private final float perfectHitHeight;
 
     public GameplayViewModel(Level level) {
         this.level = level;
-        this.startingTime = level.startTime;
-        notes = level.notesList();
+        this.startingTime = level.startTime();
+        notes = level.notes();
         speed = level.speed();
         columnCount = level.columnCount();
         firstToHit = new int[columnCount];
@@ -41,6 +40,8 @@ public class GameplayViewModel {
             }
         }
         perfectHitHeight = 0.2f;
+        if(level.isHealthStatic()) health = new StaticHealth(level.healthAmount());
+        else health = new DynamicHealth(level.healthAmount());
     }
 
     public void update(float currentTime, Texture noteTexture, float worldWidth, float worldHeight, float columnWidth) {
@@ -51,7 +52,7 @@ public class GameplayViewModel {
                 missedSprites.add(noteSprites.get(i).get(0));
                 noteSprites.get(i).removeIndex(0);
                 score.missedUpdate();
-                health.decreaseHealth();
+                health.updateHealth(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
@@ -74,6 +75,7 @@ public class GameplayViewModel {
     public void onPressUpdate(int column, float time){
         if(firstToHit[column] == -1){return;}
         HitResult result = notes.get(column).get(firstToHit[column]).hitCheck(time);
+        health.updateHealth(result);
         score.update(result);
         if(result != HitResult.NONE) {
             if (firstToHit[column] == notes.get(column).size() - 1)
@@ -86,7 +88,7 @@ public class GameplayViewModel {
     public Score getScore() {
         return score;
     }
-    public int getHealth(){
+    public float getHealth(){
         return health.currentHealth();
     }
     public List<List<Note>> getNotes() {
