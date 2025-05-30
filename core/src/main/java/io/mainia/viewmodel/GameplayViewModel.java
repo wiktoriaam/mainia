@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import io.mainia.model.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +95,10 @@ public class GameplayViewModel {
             else firstToHit[column]++;
             noteSprites.get(column).removeIndex(0);
         }
+    }
+
+    public void addNewResult() throws IOException {
+        Result.addResult(new File(level.resultLocation()),score.createResult());
     }
 
     public Score getScore() {

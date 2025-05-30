@@ -11,7 +11,12 @@ import java.util.Scanner;
 
 public class LevelFileReader {
     private final File file;
-    public LevelFileReader(String filePath){file = new File(filePath);}
+    private final String resultLocation;
+
+    public LevelFileReader(String filePath,String resultLocation) {
+        file = new File(filePath);
+        this.resultLocation = resultLocation;
+    }
 
     public Level readLevel() throws IOException {
         Scanner scanner = new Scanner(file);
@@ -52,7 +57,7 @@ public class LevelFileReader {
                 line = scanner.nextLine();
                 line = line.trim();
                 if(line.equals("Static")) stat = true;
-                else if(!line.equals("Dynamic")) throw new WrongFileFormatException("Health type doesn't exists");
+                else if(!line.equals("Dynamic")) throw new WrongFileFormatException("Health type doesn't exist");
                 line = scanner.nextLine();
                 line = line.trim();
                 healthAmount = Float.parseFloat(line);
@@ -88,7 +93,7 @@ public class LevelFileReader {
         if(length==-1) throw new WrongFileFormatException("Length not found");
         if(startTime==-1) throw new WrongFileFormatException("StartTime not found");
 
-        return new Level(speed, notes, columnCount, length, musicFilename, startTime,healthAmount,stat);
+        return new Level(speed, notes, columnCount, length, musicFilename, startTime,healthAmount,stat,resultLocation);
 
     }
 

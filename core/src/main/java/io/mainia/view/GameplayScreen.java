@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.mainia.Mainia;
+import io.mainia.model.Result;
 import io.mainia.viewmodel.GameplayViewModel;
 
 import java.text.DecimalFormat;
@@ -177,6 +178,12 @@ public class GameplayScreen implements Screen {
 
     private void win(){
         game.setScreen(new WinScreen(game, gameplayViewModel.getLevel(), keymap, gameplayViewModel.getScore()));
+        try {
+            gameplayViewModel.addNewResult();
+        }
+        catch (Exception e) {
+
+        }
         dispose();
     }
 }

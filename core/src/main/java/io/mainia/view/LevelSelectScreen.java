@@ -26,6 +26,8 @@ public class LevelSelectScreen implements Screen {
     private static final String selectBoxTexturePath = "hit_note.png";
     private static final String listBackgroundTexturePath = "hit_note.png";
     private static final String levelFilesPath = "levelfiles/";
+    private static final String resultsPath = "results/";
+    private static final String resultExtension = ".mainiasc";
     private static final String levelExtension = ".mainiabm";
 
     final Mainia game;
@@ -79,7 +81,8 @@ public class LevelSelectScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String levelPath = levelFilesPath + selectBox.getSelected() + levelExtension;
-                levelFileReader = new LevelFileReader(levelPath);
+                String resultPath = resultsPath + selectBox.getSelected() + resultExtension;
+                levelFileReader = new LevelFileReader(levelPath,resultPath);
                 try {
                     Level level = levelFileReader.readLevel();
                     game.setScreen(new SettingsScreen(game, level.columnCount(), level));

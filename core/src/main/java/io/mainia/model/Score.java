@@ -27,7 +27,12 @@ public class Score {
             }
         }
     }
+
     public void missedUpdate(){
         noOfMisses++;
+    }
+
+    public Result createResult(){
+        return new Result(score,noOfPerfects,noOfGreats,noOfOks,noOfMisses);
     }
 }

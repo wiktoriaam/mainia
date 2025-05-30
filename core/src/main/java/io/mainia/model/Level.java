@@ -9,6 +9,7 @@ public record Level(float speed,
                     String musicFilename,
                     float startTime,
                     float healthAmount,
-                    boolean isHealthStatic) {
+                    boolean isHealthStatic,
+                    String resultLocation) {
 
 }
