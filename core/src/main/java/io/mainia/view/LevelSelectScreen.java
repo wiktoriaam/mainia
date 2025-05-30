@@ -43,7 +43,7 @@ public class LevelSelectScreen implements Screen {
     private KeymapReader keymapReader;
     private SelectBox<String> selectBox;
 
-    private ArrayList<Result> results;
+    private ArrayList<Result> results = new ArrayList<>();
 
     public LevelSelectScreen(final Mainia game) {
         this.game = game;
@@ -84,9 +84,12 @@ public class LevelSelectScreen implements Screen {
         selectBox.addListener(new ChangeListener() {
            @Override
            public void changed(ChangeEvent event, Actor actor){
-               ResultsReader rr = new ResultsReader(new File(resultsPath + selectBox.getSelected() + resultExtension));
                try{
-                   results = rr.readResults();
+                   File plik = new File(resultsPath + selectBox.getSelected() + resultExtension);
+                   if (plik.exists()) {
+                       ResultsReader rr = new ResultsReader(plik);
+                       results = rr.readResults();
+                   }
                }
                catch(Exception e) {
 
@@ -119,9 +122,12 @@ public class LevelSelectScreen implements Screen {
         stage.addActor(selectBox);
         stage.addActor(button);
 
-        ResultsReader rr = new ResultsReader(new File(resultsPath + selectBox.getSelected() + resultExtension));
         try{
-            results = rr.readResults();
+            File plik = new File(resultsPath + selectBox.getSelected() + resultExtension);
+            if (plik.exists()) {
+                ResultsReader rr = new ResultsReader(plik);
+                results = rr.readResults();
+            }
         }
         catch(Exception e) {
 
