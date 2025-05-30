@@ -12,8 +12,8 @@ public record Result(int score,
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void addResult(File f,Result r) throws IOException {
-        f.createNewFile();
-        try (FileWriter fw = new FileWriter(f)) {
+        if (!f.exists()) {f.createNewFile();}
+        try (FileWriter fw = new FileWriter(f,true)) {
             fw.write( r.score + " " + r.noOfPerfects + " " + r.noOfGreats + " " + r.noOfOk + " " + r.noOfMisses + "\n");
         }
     }

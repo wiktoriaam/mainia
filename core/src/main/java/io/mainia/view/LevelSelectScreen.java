@@ -5,12 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -18,8 +20,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
+import io.mainia.model.Result;
 import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
+import io.mainia.services.ResultsReader;
+
+import java.io.File;
+import java.util.ArrayList;
 
 
 public class LevelSelectScreen implements Screen {
@@ -35,6 +42,8 @@ public class LevelSelectScreen implements Screen {
     private LevelFileReader levelFileReader;
     private KeymapReader keymapReader;
     private SelectBox<String> selectBox;
+
+    private ArrayList<Result> results;
 
     public LevelSelectScreen(final Mainia game) {
         this.game = game;
@@ -72,6 +81,18 @@ public class LevelSelectScreen implements Screen {
         Array<String> levelNames = new Array<>();
         for(FileHandle level : levels.list()) {levelNames.add(level.nameWithoutExtension());}
         selectBox.setItems(levelNames);
+        selectBox.addListener(new ChangeListener() {
+           @Override
+           public void changed(ChangeEvent event, Actor actor){
+               ResultsReader rr = new ResultsReader(new File(resultsPath + selectBox.getSelected() + resultExtension));
+               try{
+                   results = rr.readResults();
+               }
+               catch(Exception e) {
+
+               }
+           }
+        });
 
         //actual button
         TextButton button = new TextButton("Play", style);
@@ -98,6 +119,13 @@ public class LevelSelectScreen implements Screen {
         stage.addActor(selectBox);
         stage.addActor(button);
 
+        ResultsReader rr = new ResultsReader(new File(resultsPath + selectBox.getSelected() + resultExtension));
+        try{
+            results = rr.readResults();
+        }
+        catch(Exception e) {
+
+        }
     }
 
     @Override
@@ -106,6 +134,18 @@ public class LevelSelectScreen implements Screen {
         stage.act(v);
         stage.draw();
 
+        game.getBatch().begin();
+        StringBuilder scoreboard = new StringBuilder("Scoreboard:\n");
+        int i=0;
+        for(Result r : results) {
+            if(i==10) break;
+            i++;
+            scoreboard.append("#").append(i).append("    ").append(r.score()).append("\n");
+        }
+        game.getFont().draw(game.getBatch(),
+                scoreboard,
+                0.2f, 9);
+        game.getBatch().end();
     }
 
     @Override
