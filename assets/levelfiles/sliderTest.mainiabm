@@ -4,8 +4,15 @@ Length=5
 Music=turkish_march.ogg
 StartTime=-3000
 
+[Health]
+Dynamic
+10
+
 [Speed]
 2
 
 [HitObjects]
 s, 0, 0, 500
+s, 1, 250, 2000
+s, 1, 3000, 4000
+h, 3, 1000

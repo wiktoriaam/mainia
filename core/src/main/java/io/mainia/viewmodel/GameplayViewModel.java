@@ -3,6 +3,7 @@ package io.mainia.viewmodel;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 import io.mainia.model.*;
 
 import java.io.File;
@@ -22,6 +23,7 @@ public class GameplayViewModel {
     private final int columnCount;
     //sprites(temporary) TODO: switch location of the sprites array to view
     private ArrayList<Array<Sprite>> noteSprites = new ArrayList<>();
+    private Array<Sprite> sliderSprites = new Array<>();
     private Array<Sprite> missedSprites = new Array<>();
     private int[] firstToHit;
     private int[] firstToAdd;
@@ -64,15 +66,16 @@ public class GameplayViewModel {
             NoteSpriteBuilder noteSpriteBuilder = new NoteSpriteBuilder(noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture, columnWidth, level);
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Note note = notes.get(i).get(firstToAdd[i]);
-//                Sprite sprite = new Sprite(noteTexture);
-//                sprite.setSize(columnWidth, columnWidth/4);
-//                sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
-//                if((notes.get(i).get(firstToAdd[i]).hitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
-//                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).hitTime() - startingTime)*speed/1000);
-//                else sprite.setY(worldHeight);
                 Sprite sprite = null;
                 if(note instanceof HitNote hit) {
                     sprite = noteSpriteBuilder.buildHit(hit, i, currentTime);
+                }
+                if(note instanceof SliderNote slider) {
+                    ArrayList<Sprite> sprites = noteSpriteBuilder.buildSlider(slider, i, currentTime);
+                    sprite = new Sprite(sprites.get(0));
+                    sliderSprites.add(sprites.get(0));
+                    sliderSprites.add(sprites.get(1));
+                    sliderSprites.add(sprites.get(2));
                 }
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
@@ -94,6 +97,17 @@ public class GameplayViewModel {
                 firstToHit[column] = -1;
             else firstToHit[column]++;
             noteSprites.get(column).removeIndex(0);
+        }
+    }
+
+    public void onHoldUpdate(int column, float time){
+        for(Note note : notes.get(column)){
+            if(note instanceof SliderNote slider) {
+                if(time >= slider.hitTime() && time <= slider.releaseTime()){
+                    health.updateHealth(HitResult.HOLD);
+                    score.update(HitResult.HOLD);
+                }
+            }
         }
     }
 
@@ -122,5 +136,9 @@ public class GameplayViewModel {
     }
     public Level getLevel() {
         return level;
+    }
+
+    public Array<Sprite> getSliderSprites() {
+        return sliderSprites;
     }
 }

@@ -21,7 +21,7 @@ public class DynamicHealth implements Health {
             case OK: health-=0.2f; break;
             case GREAT: health+=0.3f; break;
             case PERFECT: health+=0.5f; break;
-            case NONE: return;
+            case HOLD: health+=0.1f; break;
         }
         if(health > maxHealth) health = maxHealth;
     }

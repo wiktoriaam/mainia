@@ -34,9 +34,10 @@ public class NoteSpriteBuilder {
     }
 
     public float calculateY(float currentTime, float hitTime) {
-        if ((hitTime - level.startTime()) - (1 - perfectHitHeight) * worldHeight * 1000 / level.speed() <= 0)
-            return perfectHitHeight * worldHeight + (hitTime - level.startTime()) * level.speed() / 1000;
-        else return worldHeight;
+//        if ((hitTime - level.startTime()) - (1 - perfectHitHeight) * worldHeight * 1000 / level.speed() <= 0)
+//            return perfectHitHeight * worldHeight + (hitTime - level.startTime()) * level.speed() / 1000;
+//        else return worldHeight;
+        return perfectHitHeight*worldHeight + (hitTime - currentTime) * level.speed()/1000;
     }
 
     public Sprite buildHit(HitNote hitNote, int column, float currentTime) {

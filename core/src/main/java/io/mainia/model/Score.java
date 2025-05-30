@@ -24,6 +24,8 @@ public class Score {
             } case OK -> {
                 noOfOks++;
                 score += 50;
+            } case HOLD -> {
+                score += 1;
             }
         }
     }

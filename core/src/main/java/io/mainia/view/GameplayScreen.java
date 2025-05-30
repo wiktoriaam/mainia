@@ -81,6 +81,8 @@ public class GameplayScreen implements Screen {
     public void show() {
     }
 
+    private float timeSinceHold = 0;
+
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.ROYAL);
@@ -113,6 +115,10 @@ public class GameplayScreen implements Screen {
                 sprite.draw(game.getBatch());
             }
         }
+        for(Sprite sprite : gameplayViewModel.getSliderSprites()) {
+            sprite.translateY(-gameplayViewModel.getSpeed()*delta);
+            sprite.draw(game.getBatch());
+        }
         for(Sprite sprite : gameplayViewModel.getMissed()) {
             sprite.translateY(-gameplayViewModel.getSpeed()*delta);
             sprite.draw(game.getBatch());
@@ -124,10 +130,17 @@ public class GameplayScreen implements Screen {
         //KONIEC WYŚWIETLANIA
 
         //onPressUpdate w momencie kliknięcia (tylko jesli juz mozna klikac - czyli jak juz minie mucisStartTime
+        timeSinceHold += delta;
         if(currentTime-startTime>=musicStartTime) {
             for (int i = 0; i < keymap.size(); i++) {
-                if (Gdx.input.isKeyJustPressed(keymap.get(i))) {
-                    gameplayViewModel.onPressUpdate(i, currentTime);
+                if(Gdx.input.isKeyPressed(keymap.get(i))) {
+                    if(timeSinceHold >= 0.01f) {
+                        gameplayViewModel.onHoldUpdate(i, currentTime);
+                        timeSinceHold = 0;
+                    }
+                    if (Gdx.input.isKeyJustPressed(keymap.get(i))) {
+                        gameplayViewModel.onPressUpdate(i, currentTime);
+                    }
                 }
             }
         }

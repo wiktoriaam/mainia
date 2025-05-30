@@ -1,5 +1,5 @@
 package io.mainia.model;
 
 public enum HitResult {
-    PERFECT, GREAT, OK, NONE, MISS
+    PERFECT, GREAT, OK, NONE, MISS, HOLD
 }
