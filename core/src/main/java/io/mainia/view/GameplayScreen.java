@@ -21,6 +21,9 @@ public class GameplayScreen implements Screen {
     private final DecimalFormat round = new DecimalFormat("#.0");
 
     public final static String noteTexturePath = "hit_note.png";
+    public final static String sliderStartTexturePath = "slider_start.png";
+    public final static String sliderMiddleTexturePath = "slider_middle.png";
+    public final static String sliderEndTexturePath = "slider_end.png";
     public final static String perfectWindowTexturePath = "perfect_window.png";
     public final static String columnTexturePath = "column.png";
     public final static String musicPath = "music/";
@@ -37,6 +40,9 @@ public class GameplayScreen implements Screen {
     private final Mainia game;
     private final GameplayViewModel gameplayViewModel;
     public final Texture noteTexture;
+    public final Texture sliderStartTexture;
+    public final Texture sliderMiddleTexture;
+    public final Texture sliderEndTexture;
     private final Texture perfectWindowTexture;
     private final Texture columnTexture;
     private float currentTime;
@@ -59,6 +65,9 @@ public class GameplayScreen implements Screen {
         worldHeight = game.getViewport().getWorldHeight();
         worldWidth = game.getViewport().getWorldWidth();
         noteTexture  = new Texture(noteTexturePath);
+        sliderStartTexture = new Texture(sliderStartTexturePath);
+        sliderMiddleTexture = new Texture(sliderMiddleTexturePath);
+        sliderEndTexture = new Texture(sliderEndTexturePath);
         perfectWindowTexture = new Texture(perfectWindowTexturePath);
         columnTexture = new Texture(columnTexturePath);
         music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+ gameplayViewModel.getLevel().musicFilename()));
@@ -111,7 +120,7 @@ public class GameplayScreen implements Screen {
         game.getBatch().end();
         //KONIEC WYŚWIETLANIA
 
-        //onPressUpdate w momencie kliknięcia(tylko jesli juz mozna klikac - czyli jak juz minie mucisStartTime
+        //onPressUpdate w momencie kliknięcia (tylko jesli juz mozna klikac - czyli jak juz minie mucisStartTime
         if(currentTime-startTime>=musicStartTime) {
             for (int i = 0; i < keymap.size(); i++) {
                 if (Gdx.input.isKeyJustPressed(keymap.get(i))) {

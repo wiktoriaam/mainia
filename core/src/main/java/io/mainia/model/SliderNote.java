@@ -1,8 +1,8 @@
 package io.mainia.model;
 
 public class SliderNote implements Note {
-    private float hitTime;
-    private float releaseTime;
+    private final float hitTime;
+    private final float releaseTime;
 
     public SliderNote(float hitTime, float releaseTime) {
         this.hitTime = hitTime;
@@ -16,7 +16,39 @@ public class SliderNote implements Note {
 
     @Override
     public HitResult hitCheck(float time) {
-        return null;
+        if(time <  hitTime - 1000) {
+            return HitResult.NONE;
+        }
+        if(Math.abs(time -  hitTime)<=100) {
+            return HitResult.PERFECT;
+        }
+        if(Math.abs(time - hitTime)<=200) {
+            return HitResult.GREAT;
+        }
+        if(Math.abs(time - hitTime)<=300){
+            return HitResult.OK;
+        }
+        return HitResult.NONE;
+    }
+
+    public HitResult releaseCheck(float time) {
+        if(time <  releaseTime - 1000) {
+            return HitResult.NONE;
+        }
+        if(Math.abs(time -  releaseTime)<=100) {
+            return HitResult.PERFECT;
+        }
+        if(Math.abs(time - releaseTime)<=200) {
+            return HitResult.GREAT;
+        }
+        if(Math.abs(time - releaseTime)<=300){
+            return HitResult.OK;
+        }
+        return HitResult.NONE;
+    }
+
+    public boolean hold(float time) {
+        return time > hitTime && time < releaseTime;
     }
 
     public float releaseTime() {

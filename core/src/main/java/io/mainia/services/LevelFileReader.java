@@ -1,9 +1,6 @@
 package io.mainia.services;
 
-import io.mainia.model.HitNote;
-import io.mainia.model.Level;
-import io.mainia.model.Note;
-import io.mainia.model.WrongFileFormatException;
+import io.mainia.model.*;
 
 
 import java.io.File;
@@ -69,12 +66,17 @@ public class LevelFileReader {
                 line = scanner.nextLine();
                 while(!line.isBlank()){
                     String[] tmp = line.split(", ");
-                    if(tmp[0].equals("h")) {
-                        notes.get(Integer.parseInt(tmp[1])).add(new HitNote(Float.parseFloat(tmp[2])));
+                    switch(tmp[0]) {
+                        case "h"-> {
+                            notes.get(Integer.parseInt(tmp[1]))
+                                    .add(new HitNote(Float.parseFloat(tmp[2])));
+                        }
+                        //todo: zrobic obsluge sliderow
+                        case "s" -> {
+                            notes.get(Integer.parseInt(tmp[1]))
+                                    .add(new SliderNote(Float.parseFloat(tmp[2]), Float.parseFloat(tmp[3])));
+                        }
                     }
-                    /*else{ //todo: zrobic obsluge sliderow
-
-                    }*/
                     if(scanner.hasNextLine())line = scanner.nextLine();
                     else break;
                 }
