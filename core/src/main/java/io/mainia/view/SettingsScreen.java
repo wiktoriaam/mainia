@@ -11,14 +11,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
 import io.mainia.services.KeymapReader;
-import io.mainia.services.LevelFileReader;
 import io.mainia.viewmodel.GameplayViewModel;
 import io.mainia.viewmodel.SettingsViewModel;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import io.mainia.services.*;
 
 public class SettingsScreen implements Screen {
     //aby zmienic klawisz w danej kolumnie nalezy kliknąc przycisk change obok aktualnego klawisza na tą kolumne i wtedy wcisnąć dopiero
@@ -78,7 +75,7 @@ public class SettingsScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     KeymapReader keymapReader = new KeymapReader();
-                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.getColumnCount()), level.startTime, -level.startTime, 0));
+                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.columnCount()), level.startTime, -level.startTime, 0));
                     dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

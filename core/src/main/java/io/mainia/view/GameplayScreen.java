@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.mainia.Mainia;
-import io.mainia.model.Level;
 import io.mainia.viewmodel.GameplayViewModel;
 
 import java.util.List;
@@ -59,7 +58,7 @@ public class GameplayScreen implements Screen {
         noteTexture  = new Texture(noteTexturePath);
         perfectWindowTexture = new Texture(perfectWindowTexturePath);
         columnTexture = new Texture(columnTexturePath);
-        music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+gameplayViewModel.getLevel().getMusicFilename()));
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+gameplayViewModel.getLevel().NameOfMusicFile()));
         music.setLooping(false);
     }
 
@@ -81,7 +80,7 @@ public class GameplayScreen implements Screen {
         gameplayViewModel.update(currentTime, noteTexture, worldWidth, worldHeight, columnWidth);
 
         if(gameplayViewModel.getHealth() <= 0) fail();
-        if(currentTime>=gameplayViewModel.getLevel().getLength()*1000) win();
+        if(currentTime>=gameplayViewModel.getLevel().length()*1000) win();
 
 
         //CAŁE WYŚWIETLANIE PONIZEJ:
@@ -104,7 +103,7 @@ public class GameplayScreen implements Screen {
             sprite.draw(game.getBatch());
         }
         game.getBatch().draw(perfectWindowTexture, worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
-        game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().getScore(), 0,9);
+        game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().currentScore(), 0,9);
         game.getFont().draw(game.getBatch(), "Health remaining:"+gameplayViewModel.getHealth(), 0, 8);
         game.getBatch().end();
         //KONIEC WYŚWIETLANIA

@@ -10,7 +10,7 @@ public class SliderNote implements Note {
     }
 
     @Override
-    public float getHitTime() {
+    public float hitTime() {
         return hitTime;
     }
 
@@ -19,7 +19,7 @@ public class SliderNote implements Note {
         return null;
     }
 
-    public float getReleaseTime() {
+    public float releaseTime() {
         return releaseTime;
     }
 

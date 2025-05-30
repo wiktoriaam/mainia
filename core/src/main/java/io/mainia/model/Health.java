@@ -1,7 +1,7 @@
 package io.mainia.model;
 
 public interface Health {
-    int getHealth();
+    int currentHealth();
     void decreaseHealth();
 
 }

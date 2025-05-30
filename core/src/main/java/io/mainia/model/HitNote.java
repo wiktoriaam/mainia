@@ -9,7 +9,7 @@ public class HitNote implements Note {
     }
 
     @Override
-    public float getHitTime() {
+    public float hitTime() {
         return hitTime;
     }
     @Override

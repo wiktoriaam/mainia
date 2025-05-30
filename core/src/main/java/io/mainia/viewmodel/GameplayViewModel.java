@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import io.mainia.model.*;
-import io.mainia.view.GameplayScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,9 @@ public class GameplayViewModel {
     public GameplayViewModel(Level level) {
         this.level = level;
         this.startingTime = level.startTime;
-        notes = level.getNotes();
-        speed = level.getSpeed();
-        columnCount = level.getColumnCount();
+        notes = level.notesList();
+        speed = level.speed();
+        columnCount = level.columnCount();
         firstToHit = new int[columnCount];
         firstToAdd = new int[columnCount];
         for(int i=0; i<columnCount; i++) {
@@ -47,7 +46,7 @@ public class GameplayViewModel {
     public void update(float currentTime, Texture noteTexture, float worldWidth, float worldHeight, float columnWidth) {
         for(int i = 0; i < columnCount; i++){
             //missed notes
-            while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).getHitTime() + 1000/speed < currentTime){
+            while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).hitTime() + 1000/speed < currentTime){
                 firstToHit[i]++;
                 missedSprites.add(noteSprites.get(i).get(0));
                 noteSprites.get(i).removeIndex(0);
@@ -55,12 +54,12 @@ public class GameplayViewModel {
                 health.decreaseHealth();
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
-            while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).getHitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
+            while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Sprite sprite = new Sprite(noteTexture);
                 sprite.setSize(columnWidth, columnWidth/4);
                 sprite.setX(worldWidth/2 + columnWidth*(i-(float)columnCount/2));
-                if((notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
-                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).getHitTime() - startingTime)*speed/1000);
+                if((notes.get(i).get(firstToAdd[i]).hitTime() - startingTime) - (1-perfectHitHeight)*worldHeight*1000/speed <= 0)
+                    sprite.setY(perfectHitHeight*worldHeight+(notes.get(i).get(firstToAdd[i]).hitTime() - startingTime)*speed/1000);
                 else sprite.setY(worldHeight);
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
@@ -88,7 +87,7 @@ public class GameplayViewModel {
         return score;
     }
     public int getHealth(){
-        return health.getHealth();
+        return health.currentHealth();
     }
     public List<List<Note>> getNotes() {
         return notes;

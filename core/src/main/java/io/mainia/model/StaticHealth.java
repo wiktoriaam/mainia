@@ -7,7 +7,7 @@ public class StaticHealth implements Health {
         this.health = health;
     }
     @Override
-    public int getHealth() {
+    public int currentHealth() {
         return health;
     }
     @Override

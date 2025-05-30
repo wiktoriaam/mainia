@@ -20,7 +20,6 @@ import io.mainia.Mainia;
 import io.mainia.model.Level;
 import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
-import io.mainia.viewmodel.GameplayViewModel;
 
 
 public class LevelSelectScreen implements Screen {
@@ -83,7 +82,7 @@ public class LevelSelectScreen implements Screen {
                 levelFileReader = new LevelFileReader(levelPath);
                 try {
                     Level level = levelFileReader.readLevel();
-                    game.setScreen(new SettingsScreen(game, level.getColumnCount(), level));
+                    game.setScreen(new SettingsScreen(game, level.columnCount(), level));
                     dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());

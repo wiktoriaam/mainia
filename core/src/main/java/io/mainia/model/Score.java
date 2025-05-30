@@ -7,11 +7,11 @@ public class Score {
     private int noOfOks;
     private int noOfMisses;
 
-    public int getScore(){return score;}
-    public int getNoOfPerfects(){return noOfPerfects;}
-    public int getNoOfGreats(){return noOfGreats;}
-    public int getNoOfOks(){return noOfOks;}
-    public int getNoOfMisses(){return noOfMisses;}
+    public int currentScore(){return score;}
+    public int NoOfPerfects(){return noOfPerfects;}
+    public int NoOfGreats(){return noOfGreats;}
+    public int tNoOfOks(){return noOfOks;}
+    public int NoOfMisses(){return noOfMisses;}
 
     public void update(HitResult State){
         switch (State) {

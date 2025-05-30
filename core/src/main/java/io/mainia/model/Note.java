@@ -1,6 +1,6 @@
 package io.mainia.model;
 
 public interface Note {
-    float getHitTime();
+    float hitTime();
     HitResult hitCheck(float time);
 }

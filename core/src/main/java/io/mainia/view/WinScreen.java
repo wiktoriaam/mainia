@@ -69,11 +69,11 @@ public class WinScreen implements Screen {
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Level cleared!", 5, 9);
         game.getFont().draw(game.getBatch(),
-                "Score: " + score.getScore() + "\n" +
-                "Perfect: " + score.getNoOfPerfects() + "\n" +
-                "Great: " + score.getNoOfGreats() + "\n" +
-                "OK: " + score.getNoOfOks() + "\n" +
-                "Miss: " + score.getNoOfMisses(),
+                "Score: " + score.currentScore() + "\n" +
+                "Perfect: " + score.NoOfPerfects() + "\n" +
+                "Great: " + score.NoOfGreats() + "\n" +
+                "OK: " + score.tNoOfOks() + "\n" +
+                "Miss: " + score.NoOfMisses(),
                 1, 9);
         game.getBatch().end();
     }

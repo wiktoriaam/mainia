@@ -19,13 +19,13 @@ public class Level {
         this.startTime = startTime;
     }
 
-    public List<List<Note>> getNotes() {return notes;}
+    public List<List<Note>> notesList() {return notes;}
 
-    public float getSpeed() {return speed;}
+    public float speed() {return speed;}
 
-    public short getColumnCount() {return columnCount;}
+    public short columnCount() {return columnCount;}
 
-    public float getLength() {return length;}
+    public float length() {return length;}
 
-    public String getMusicFilename() {return musicFilename;}
+    public String NameOfMusicFile() {return musicFilename;}
 }

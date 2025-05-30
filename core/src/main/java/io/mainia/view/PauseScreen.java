@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
-import io.mainia.model.Level;
-import io.mainia.model.Score;
 import io.mainia.viewmodel.GameplayViewModel;
 
 import java.util.List;
@@ -82,12 +80,12 @@ public class PauseScreen implements Screen {
             for(int i = 0; i < gameplayViewModel.getColumnCount(); i++){
                 for(Sprite s : gameplayViewModel.getNoteSprites().get(i)){
                     float y = s.getY();
-                    s.setY(y + gameplayViewModel.getLevel().getSpeed()*timeAfterPause/1000);
+                    s.setY(y + gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
                 }
             }
             for(Sprite s : gameplayViewModel.getMissed()){
                 float y = s.getY();
-                s.setY(y + gameplayViewModel.getLevel().getSpeed()*timeAfterPause/1000);
+                s.setY(y + gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
             }
             game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, timeAfterPause, stopTime));
         }
