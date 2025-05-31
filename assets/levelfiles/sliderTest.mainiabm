@@ -1,6 +1,6 @@
 [General]
 ColumnCount=4
-Length=5
+Length=25
 Music=turkish_march.ogg
 StartTime=-1000
 
@@ -12,8 +12,9 @@ Dynamic
 5
 
 [HitObjects]
-h, 0, 100
-h, 1, 200
-h, 2, 300
-h, 3, 400
-s, 2, 1000, 2000
+s, 2, 2000, 4000
+h, 0, 10000
+h, 1, 11000
+h, 2, 12000
+h, 3, 13000
+s, 3, 18000, 20000

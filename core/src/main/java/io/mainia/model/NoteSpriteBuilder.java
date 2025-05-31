@@ -34,9 +34,6 @@ public class NoteSpriteBuilder {
     }
 
     public float calculateY(float currentTime, float hitTime) {
-//        if ((hitTime - level.startTime()) - (1 - perfectHitHeight) * worldHeight * 1000 / level.speed() <= 0)
-//            return perfectHitHeight * worldHeight + (hitTime - level.startTime()) * level.speed() / 1000;
-//        else return worldHeight;
         return perfectHitHeight*worldHeight + (hitTime - currentTime) * level.speed()/1000;
     }
 
@@ -51,13 +48,13 @@ public class NoteSpriteBuilder {
     public ArrayList<Sprite> buildSlider(SliderNote sliderNote, int column, float currentTime) {
         ArrayList<Sprite> sprites = new ArrayList<>();
         Sprite start = new Sprite(sliderStartTexture);
-        start.setSize(columnWidth, (float)columnWidth/4);
+        start.setSize(columnWidth, columnWidth/4);
         start.setX(calculateX(column));
         start.setY(calculateY(currentTime, sliderNote.hitTime()));
         sprites.add(start);
 
         Sprite end = new Sprite(sliderEndTexture);
-        end.setSize(columnWidth, (float)columnWidth/4);
+        end.setSize(columnWidth, columnWidth/4);
         end.setX(calculateX(column));
         end.setY(calculateY(currentTime, sliderNote.releaseTime()));
         sprites.add(end);

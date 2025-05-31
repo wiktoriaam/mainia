@@ -19,29 +19,13 @@ public class SliderNote implements Note {
         if(time <  hitTime - 1000) {
             return HitResult.NONE;
         }
-        if(Math.abs(time -  hitTime)<=100) {
+        if(Math.abs(time - hitTime)<=100) {
             return HitResult.PERFECT;
         }
         if(Math.abs(time - hitTime)<=200) {
             return HitResult.GREAT;
         }
         if(Math.abs(time - hitTime)<=300){
-            return HitResult.OK;
-        }
-        return HitResult.NONE;
-    }
-
-    public HitResult releaseCheck(float time) {
-        if(time <  releaseTime - 1000) {
-            return HitResult.NONE;
-        }
-        if(Math.abs(time -  releaseTime)<=100) {
-            return HitResult.PERFECT;
-        }
-        if(Math.abs(time - releaseTime)<=200) {
-            return HitResult.GREAT;
-        }
-        if(Math.abs(time - releaseTime)<=300){
             return HitResult.OK;
         }
         return HitResult.NONE;
