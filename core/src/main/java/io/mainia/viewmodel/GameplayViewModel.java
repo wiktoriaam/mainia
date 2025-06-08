@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import io.mainia.model.*;
+import io.mainia.services.ResultWriter;
 
 import java.io.File;
 import java.io.IOException;
@@ -110,7 +111,7 @@ public class GameplayViewModel {
     }
 
     public void addNewResult() throws IOException {
-        Result.addResult(new File(level.resultLocation()),score.createResult());
+        ResultWriter.addResult(new File(level.resultLocation()),score.createResult());
     }
 
     public Score getScore() {
