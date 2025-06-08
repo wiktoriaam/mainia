@@ -30,6 +30,7 @@ public class GameplayViewModel {
     private final float startingTime;
     private final Health health;
     private final float perfectHitHeight;
+    private final NoteSpriteFactory noteSpriteFactory;
 
     public GameplayViewModel(Level level) {
         this.level = level;
@@ -37,6 +38,7 @@ public class GameplayViewModel {
         notes = level.notes();
         speed = level.speed();
         columnCount = level.columnCount();
+        noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
         firstToHit = new int[columnCount];
         firstToAdd = new int[columnCount];
         for(int i=0; i<columnCount; i++) {
@@ -62,7 +64,6 @@ public class GameplayViewModel {
                 health.updateHealth(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
-            NoteSpriteFactory noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Note note = notes.get(i).get(firstToAdd[i]);
                 Sprite sprite = new Sprite(noteTexture);
