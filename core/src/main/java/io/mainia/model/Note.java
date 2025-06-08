@@ -1,7 +1,7 @@
 package io.mainia.model;
 
 public abstract class Note {
-    public final float hitTime;
+    protected final float hitTime;
     Note(float hitTime) {
         this.hitTime = hitTime;
     }

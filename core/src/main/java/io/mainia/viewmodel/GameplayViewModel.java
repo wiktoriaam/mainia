@@ -62,19 +62,30 @@ public class GameplayViewModel {
                 health.updateHealth(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
-            NoteSpriteFactory noteSpriteFactory = new NoteSpriteFactory(noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture, columnWidth, level);
+            NoteSpriteFactory noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Note note = notes.get(i).get(firstToAdd[i]);
-                Sprite sprite = null;
+                Sprite sprite = new Sprite(noteTexture);
+                sprite.setSize(columnWidth, columnWidth/4);
                 if(note instanceof HitNote hit) {
-                    sprite = noteSpriteFactory.buildHit(hit, i, currentTime);
+                    ArrayList<Float> coords = noteSpriteFactory.buildHit(hit, i, currentTime);
+                    sprite.setPosition(coords.get(0), coords.get(1));
                 }
                 if(note instanceof SliderNote slider) {
-                    ArrayList<Sprite> sprites = noteSpriteFactory.buildSlider(slider, i, currentTime);
-                    sprite = new Sprite(sprites.get(0));
-                    sliderSprites.add(sprites.get(0));
-                    sliderSprites.add(sprites.get(1));
-                    sliderSprites.add(sprites.get(2));
+                    ArrayList<Float> coords = noteSpriteFactory.buildSlider(slider, i, currentTime);
+                    Sprite start =  new Sprite(sliderStartTexture);
+                    start.setSize(columnWidth, columnWidth/4);
+                    start.setPosition(coords.get(0), coords.get(1));
+
+                    Sprite end =  new Sprite(sliderEndTexture);
+                    end.setSize(columnWidth, columnWidth/4);
+                    end.setPosition(coords.get(0), coords.get(2));
+
+                    Sprite middle = new Sprite(sliderMiddleTexture);
+                    middle.setSize(columnWidth, end.getY() - start.getY()+columnWidth/4);
+                    middle.setPosition(coords.get(0), coords.get(3));
+
+                    sliderSprites.addAll(start, end, middle);
                 }
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;

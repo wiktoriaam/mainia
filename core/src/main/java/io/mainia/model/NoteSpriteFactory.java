@@ -1,8 +1,5 @@
 package io.mainia.model;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import java.util.ArrayList;
 
 import static io.mainia.Mainia.worldHeight;
@@ -10,19 +7,10 @@ import static io.mainia.Mainia.worldWidth;
 import static io.mainia.view.GameplayScreen.perfectHitHeight;
 
 public class NoteSpriteFactory {
-    private final Texture noteTexture;
-    private final Texture sliderStartTexture;
-    private final Texture sliderMiddleTexture;
-    private final Texture sliderEndTexture;
     private final float columnWidth;
     private final Level level;
 
-    public NoteSpriteFactory(Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture,
-                             float columnWidth, Level level) {
-        this.noteTexture = noteTexture;
-        this.sliderStartTexture = sliderStartTexture;
-        this.sliderMiddleTexture = sliderMiddleTexture;
-        this.sliderEndTexture = sliderEndTexture;
+    public NoteSpriteFactory(float columnWidth, Level level) {
         this.level = level;
         this.columnWidth = columnWidth;
     }
@@ -35,34 +23,17 @@ public class NoteSpriteFactory {
         return perfectHitHeight*worldHeight + (hitTime - currentTime) * level.speed()/1000;
     }
 
-    public Sprite buildHit(HitNote hitNote, int column, float currentTime) {
-        Sprite sprite = new Sprite(noteTexture);
-        sprite.setSize(columnWidth, columnWidth/4);
-        sprite.setX(calculateX(column));
-        sprite.setY(calculateY(currentTime, hitNote.hitTime()));
-        return sprite;
+    public ArrayList<Float> buildHit(Note hitNote, int column, float currentTime) {
+        ArrayList<Float> coords = new ArrayList<>();
+        coords.add(calculateX(column));
+        coords.add(calculateY(currentTime, hitNote.hitTime()));
+        return coords;
     }
 
-    public ArrayList<Sprite> buildSlider(SliderNote sliderNote, int column, float currentTime) {
-        ArrayList<Sprite> sprites = new ArrayList<>();
-        Sprite start = new Sprite(sliderStartTexture);
-        start.setSize(columnWidth, columnWidth/4);
-        start.setX(calculateX(column));
-        start.setY(calculateY(currentTime, sliderNote.hitTime()));
-        sprites.add(start);
-
-        Sprite end = new Sprite(sliderEndTexture);
-        end.setSize(columnWidth, columnWidth/4);
-        end.setX(calculateX(column));
-        end.setY(calculateY(currentTime, sliderNote.releaseTime()));
-        sprites.add(end);
-
-        Sprite middle = new Sprite(sliderMiddleTexture);
-        middle.setSize(columnWidth, end.getY()-start.getY() + columnWidth/4);
-        middle.setX(calculateX(column));
-        middle.setY(calculateY(currentTime, sliderNote.hitTime()+columnWidth/4));
-        sprites.add(middle);
-
-        return sprites;
+    public ArrayList<Float> buildSlider(SliderNote sliderNote, int column, float currentTime) {
+        ArrayList<Float> coords = buildHit(sliderNote,  column, currentTime);
+        coords.add(calculateY(currentTime, sliderNote.releaseTime()));
+        coords.add(calculateY(currentTime, sliderNote.hitTime()+columnWidth/4));
+        return coords;
     }
 }
