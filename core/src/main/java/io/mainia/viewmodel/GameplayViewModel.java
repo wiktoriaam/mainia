@@ -66,14 +66,18 @@ public class GameplayViewModel {
             }
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Note note = notes.get(i).get(firstToAdd[i]);
-                Sprite sprite = new Sprite(noteTexture);
-                sprite.setSize(columnWidth, columnWidth/4);
+                Sprite sprite = null;
+
                 if(note instanceof HitNote hit) {
                     ArrayList<Float> coords = noteSpriteFactory.buildHit(hit, i, currentTime);
+                    sprite = new Sprite(noteTexture);
                     sprite.setPosition(coords.get(0), coords.get(1));
                 }
                 if(note instanceof SliderNote slider) {
                     ArrayList<Float> coords = noteSpriteFactory.buildSlider(slider, i, currentTime);
+                    sprite = new  Sprite(sliderStartTexture);
+                    sprite.setPosition(coords.get(0), coords.get(1));
+
                     Sprite start =  new Sprite(sliderStartTexture);
                     start.setSize(columnWidth, columnWidth/4);
                     start.setPosition(coords.get(0), coords.get(1));
@@ -88,6 +92,7 @@ public class GameplayViewModel {
 
                     sliderSprites.addAll(start, end, middle);
                 }
+                sprite.setSize(columnWidth, columnWidth/4);
                 noteSprites.get(i).add(sprite);
                 firstToAdd[i]++;
                 if(notes.get(i).size() == firstToAdd[i]) firstToAdd[i] = -1;
