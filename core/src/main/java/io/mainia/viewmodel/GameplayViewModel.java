@@ -54,10 +54,12 @@ public class GameplayViewModel {
         else health = new DynamicHealth(level.healthAmount());
     }
 
-    public void update(float currentTime, Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture) {
+    public boolean update(float currentTime, Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture) {
+        boolean missed = false;
         for(int i = 0; i < columnCount; i++){
             //missed notes
             while(firstToHit[i]!=-1 && notes.get(i).get(firstToHit[i]).hitTime() + 1000/speed < currentTime){
+                missed = true;
                 firstToHit[i]++;
                 missedSprites.add(noteSprites.get(i).get(0));
                 noteSprites.get(i).removeIndex(0);
@@ -103,10 +105,11 @@ public class GameplayViewModel {
         for(int i=missedSprites.size-1; i>=0; i--){
             if(missedSprites.get(i).getY()<0)missedSprites.removeIndex(i);
         }
+        return missed;
     }
 
-    public void onPressUpdate(int column, float time){
-        if(firstToHit[column] == -1){return;}
+    public HitResult onPressUpdate(int column, float time){
+        if(firstToHit[column] == -1){return HitResult.NONE;}
         HitResult result = notes.get(column).get(firstToHit[column]).hitCheck(time);
         health.updateHealth(result);
         combo.updateCombo(result);
@@ -117,6 +120,7 @@ public class GameplayViewModel {
             else firstToHit[column]++;
             noteSprites.get(column).removeIndex(0);
         }
+        return result;
     }
 
     public void onHoldUpdate(int column, float time){

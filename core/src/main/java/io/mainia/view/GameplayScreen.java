@@ -11,11 +11,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.mainia.Mainia;
+import io.mainia.model.HitResult;
 import io.mainia.model.Result;
 import io.mainia.viewmodel.GameplayViewModel;
 
 import java.text.DecimalFormat;
 import java.util.List;
+
+import static io.mainia.Mainia.worldHeight;
+import static io.mainia.Mainia.worldWidth;
 
 public class GameplayScreen implements Screen {
 
@@ -28,6 +32,10 @@ public class GameplayScreen implements Screen {
     public final static String perfectWindowTexturePath = "perfect_window.png";
     public final static String columnTexturePath = "column.png";
     public final static String musicPath = "music/";
+    public final static String perfectPopupPath = "perfect_popup.png";
+    public final static String greatPopupPath = "great_popup.png";
+    public final static String okPopupPath = "ok_popup.png";
+    public final static String missPopupPath = "miss_popup.png";
     public final static float columnWidth = 0.75f;
     public final static float perfectHitHeight = 0.2f;
 
@@ -46,9 +54,14 @@ public class GameplayScreen implements Screen {
     public final Texture sliderEndTexture;
     private final Texture perfectWindowTexture;
     private final Texture columnTexture;
+    private final Texture perfectPopupTexture;
+    private final Texture greatPopupTexture;
+    private final Texture okPopupTexture;
+    private final Texture missPopupTexture;
     private float currentTime;
     private final List<Integer> keymap;
     private final Music music;
+    private Texture resultPopup = null;
 //    public float worldHeight;
 //    public float worldWidth;
 
@@ -72,6 +85,10 @@ public class GameplayScreen implements Screen {
         sliderMiddleTexture = new Texture(sliderMiddleTexturePath);
         sliderEndTexture = new Texture(sliderEndTexturePath);
         perfectWindowTexture = new Texture(perfectWindowTexturePath);
+        perfectPopupTexture = new Texture(perfectPopupPath);
+        greatPopupTexture = new Texture(greatPopupPath);
+        okPopupTexture = new Texture(okPopupPath);
+        missPopupTexture = new Texture(missPopupPath);
         columnTexture = new Texture(columnTexturePath);
         music = Gdx.audio.newMusic(Gdx.files.internal(musicPath+ gameplayViewModel.getLevel().musicFilename()));
         music.setLooping(false);
@@ -82,6 +99,7 @@ public class GameplayScreen implements Screen {
     }
 
     private float timeSinceHold = 0;
+    private float timeSincePopup = 0;
 
     @Override
     public void render(float delta) {
@@ -94,7 +112,13 @@ public class GameplayScreen implements Screen {
         }
         int columnCount = gameplayViewModel.getColumnCount();
         //update aktualnie wyswietlanych node'ow
-        gameplayViewModel.update(currentTime, noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture);
+        timeSincePopup += delta;
+        if(timeSincePopup > 0.5f)
+            resultPopup = null;
+        if(gameplayViewModel.update(currentTime, noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture)) {
+            timeSincePopup = 0;
+            resultPopup = missPopupTexture;
+        }
 
         if(gameplayViewModel.getHealth() <= 0) fail();
         if(currentTime>=gameplayViewModel.getLevel().length()*1000) win();
@@ -104,10 +128,11 @@ public class GameplayScreen implements Screen {
         game.getViewport().apply();
         game.getBatch().setProjectionMatrix(game.getViewport().getCamera().combined);
 
+
         //wyswietlanie node'ow
         game.getBatch().begin();
         for(int i=0; i<columnCount; i++) {
-            game.getBatch().draw(columnTexture, Mainia.worldWidth/2 - columnWidth*columnCount/2 + i*columnWidth, 0, columnWidth, Mainia.worldHeight);
+            game.getBatch().draw(columnTexture, worldWidth/2 - columnWidth*columnCount/2 + i*columnWidth, 0, columnWidth, Mainia.worldHeight);
         }
         for(Array<Sprite> arr : gameplayViewModel.getNoteSprites()) {
             for (Sprite sprite : arr) {
@@ -123,7 +148,9 @@ public class GameplayScreen implements Screen {
             sprite.translateY(-gameplayViewModel.getSpeed()*delta);
             sprite.draw(game.getBatch());
         }
-        game.getBatch().draw(perfectWindowTexture, Mainia.worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
+        if(resultPopup != null)
+            game.getBatch().draw(resultPopup, worldWidth/2-3.2f/2, worldHeight*3/4-2.0f/2, 3.2f, 2.0f);
+        game.getBatch().draw(perfectWindowTexture, worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
         game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().currentScore(), 0,9);
         game.getFont().draw(game.getBatch(), "Health remaining:"+round.format(gameplayViewModel.getHealth()), 0, 8);
         game.getFont().draw(game.getBatch(), "Combo:" + gameplayViewModel.getCombo(), 0, 8.5f);
@@ -140,7 +167,13 @@ public class GameplayScreen implements Screen {
                         timeSinceHold = 0;
                     }
                     if (Gdx.input.isKeyJustPressed(keymap.get(i))) {
-                        gameplayViewModel.onPressUpdate(i, currentTime);
+                        HitResult result = gameplayViewModel.onPressUpdate(i, currentTime);
+                        switch(result) {
+                            case OK -> resultPopup = okPopupTexture;
+                            case PERFECT  -> resultPopup = perfectPopupTexture;
+                            case GREAT    -> resultPopup = greatPopupTexture;
+                        }
+                        if(result != HitResult.NONE) timeSincePopup = 0;
                     }
                 }
             }
