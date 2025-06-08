@@ -3,7 +3,6 @@ package io.mainia.viewmodel;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Queue;
 import io.mainia.model.*;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.mainia.Mainia.worldHeight;
-import static io.mainia.Mainia.worldWidth;
 import static io.mainia.view.GameplayScreen.columnWidth;
 
 public class GameplayViewModel {
@@ -63,15 +61,15 @@ public class GameplayViewModel {
                 health.updateHealth(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
-            NoteSpriteBuilder noteSpriteBuilder = new NoteSpriteBuilder(noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture, columnWidth, level);
+            NoteSpriteFactory noteSpriteFactory = new NoteSpriteFactory(noteTexture, sliderStartTexture, sliderMiddleTexture, sliderEndTexture, columnWidth, level);
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
                 Note note = notes.get(i).get(firstToAdd[i]);
                 Sprite sprite = null;
                 if(note instanceof HitNote hit) {
-                    sprite = noteSpriteBuilder.buildHit(hit, i, currentTime);
+                    sprite = noteSpriteFactory.buildHit(hit, i, currentTime);
                 }
                 if(note instanceof SliderNote slider) {
-                    ArrayList<Sprite> sprites = noteSpriteBuilder.buildSlider(slider, i, currentTime);
+                    ArrayList<Sprite> sprites = noteSpriteFactory.buildSlider(slider, i, currentTime);
                     sprite = new Sprite(sprites.get(0));
                     sliderSprites.add(sprites.get(0));
                     sliderSprites.add(sprites.get(1));

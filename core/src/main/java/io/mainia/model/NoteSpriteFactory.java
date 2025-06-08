@@ -2,8 +2,6 @@ package io.mainia.model;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import io.mainia.Mainia;
-import io.mainia.view.GameplayScreen;
 
 import java.util.ArrayList;
 
@@ -11,7 +9,7 @@ import static io.mainia.Mainia.worldHeight;
 import static io.mainia.Mainia.worldWidth;
 import static io.mainia.view.GameplayScreen.perfectHitHeight;
 
-public class NoteSpriteBuilder {
+public class NoteSpriteFactory {
     private final Texture noteTexture;
     private final Texture sliderStartTexture;
     private final Texture sliderMiddleTexture;
@@ -19,7 +17,7 @@ public class NoteSpriteBuilder {
     private final float columnWidth;
     private final Level level;
 
-    public NoteSpriteBuilder(Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture,
+    public NoteSpriteFactory(Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture,
                              float columnWidth, Level level) {
         this.noteTexture = noteTexture;
         this.sliderStartTexture = sliderStartTexture;
