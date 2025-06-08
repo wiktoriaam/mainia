@@ -1,3 +1,7 @@
+backgrounds/custom_image_up.png
+backgrounds/mainscreen_bg.png
+backgrounds/mainscreen_title.png
+backgrounds/win_bg.png
 column.png
 hit_note.png
 levelfiles/allColumnsTest.mainiabm
@@ -9,6 +13,8 @@ music/Cancan.ogg
 music/turkish_march.ogg
 perfect_window.png
 results/easy.mainiasc
+results/poziom.mainiasc
+results/sliderTest.mainiasc
 select_another.png
 settings/settings.mainia
 slider_end.png
