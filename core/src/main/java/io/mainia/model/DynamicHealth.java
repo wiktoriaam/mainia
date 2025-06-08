@@ -17,11 +17,11 @@ public class DynamicHealth implements Health {
     @Override
     public void updateHealth(HitResult hitResult){
         switch(hitResult){
-            case MISS: health-=1; break;
-            case OK: health-=0.2f; break;
-            case GREAT: health+=0.3f; break;
-            case PERFECT: health+=0.5f; break;
-            case HOLD: health+=0.01f; break;
+            case MISS -> health-=1;
+            case OK -> health-=0.2f;
+            case GREAT -> health+=0.3f;
+            case PERFECT -> health+=0.5f;
+            case HOLD -> health+=0.01f;
         }
         if(health > maxHealth) health = maxHealth;
     }
