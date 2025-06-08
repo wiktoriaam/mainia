@@ -31,6 +31,7 @@ public class GameplayViewModel {
     private final Health health;
     private final float perfectHitHeight;
     private final NoteSpriteFactory noteSpriteFactory;
+    private final Combo combo = new Combo();
 
     public GameplayViewModel(Level level) {
         this.level = level;
@@ -62,6 +63,7 @@ public class GameplayViewModel {
                 noteSprites.get(i).removeIndex(0);
                 score.missedUpdate();
                 health.updateHealth(HitResult.MISS);
+                combo.updateCombo(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
             while(firstToAdd[i]!=-1 && notes.get(i).get(firstToAdd[i]).hitTime() - (1-perfectHitHeight)*worldHeight*1000/speed < currentTime){
@@ -107,7 +109,8 @@ public class GameplayViewModel {
         if(firstToHit[column] == -1){return;}
         HitResult result = notes.get(column).get(firstToHit[column]).hitCheck(time);
         health.updateHealth(result);
-        score.update(result);
+        combo.updateCombo(result);
+        score.update(result,combo);
         if(result != HitResult.NONE) {
             if (firstToHit[column] == notes.get(column).size() - 1)
                 firstToHit[column] = -1;
@@ -121,7 +124,8 @@ public class GameplayViewModel {
             if(note instanceof SliderNote slider) {
                 if(time >= slider.hitTime() && time <= slider.releaseTime()){
                     health.updateHealth(HitResult.HOLD);
-                    score.update(HitResult.HOLD);
+                    combo.updateCombo(HitResult.HOLD);
+                    score.update(HitResult.HOLD,combo);
                 }
             }
         }
@@ -156,5 +160,9 @@ public class GameplayViewModel {
 
     public Array<Sprite> getSliderSprites() {
         return sliderSprites;
+    }
+
+    public int getCombo(){
+        return combo.currentCombo();
     }
 }

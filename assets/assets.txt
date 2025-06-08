@@ -12,9 +12,9 @@ levelfiles/sliderTest.mainiabm
 music/Cancan.ogg
 music/turkish_march.ogg
 perfect_window.png
+results/allColumnsTest.mainiasc
 results/easy.mainiasc
 results/poziom.mainiasc
-results/sliderTest.mainiasc
 select_another.png
 settings/settings.mainia
 slider_end.png

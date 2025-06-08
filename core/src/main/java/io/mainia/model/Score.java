@@ -13,17 +13,17 @@ public class Score {
     public int tNoOfOks(){return noOfOks;}
     public int NoOfMisses(){return noOfMisses;}
 
-    public void update(HitResult State){
+    public void update(HitResult State,Combo combo){
         switch (State) {
             case PERFECT -> {
                 noOfPerfects++;
-                score += 300;
+                score += (int) ( 300 * (1+((float)combo.currentCombo())/100));
             } case GREAT -> {
                 noOfGreats++;
-                score += 100;
+                score += (int) (100 * (1+((float)combo.currentCombo())/100));
             } case OK -> {
                 noOfOks++;
-                score += 50;
+                score += (int) (50 * (1+((float)combo.currentCombo())/100));
             } case HOLD -> {
                 score += 1;
             }

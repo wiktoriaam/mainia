@@ -126,6 +126,7 @@ public class GameplayScreen implements Screen {
         game.getBatch().draw(perfectWindowTexture, Mainia.worldWidth/2 - columnWidth*columnCount/2, 2, columnWidth*columnCount, 0.25f);
         game.getFont().draw(game.getBatch(), "Score:"+gameplayViewModel.getScore().currentScore(), 0,9);
         game.getFont().draw(game.getBatch(), "Health remaining:"+round.format(gameplayViewModel.getHealth()), 0, 8);
+        game.getFont().draw(game.getBatch(), "Combo:" + gameplayViewModel.getCombo(), 0, 8.5f);
         game.getBatch().end();
         //KONIEC WYŚWIETLANIA
 
