@@ -2,10 +2,15 @@ package io.mainia.view;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
@@ -16,6 +21,8 @@ import io.mainia.viewmodel.SettingsViewModel;
 
 import java.io.IOException;
 import java.util.List;
+
+import static com.badlogic.gdx.graphics.Texture.TextureFilter.Linear;
 
 public class SettingsScreen implements Screen {
     //aby zmienic klawisz w danej kolumnie nalezy kliknąc przycisk change obok aktualnego klawisza na tą kolumne i wtedy wcisnąć dopiero
@@ -64,12 +71,14 @@ public class SettingsScreen implements Screen {
     @Override
     public void show() {
         refreshButtons();
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = game.getFont();
-        style.fontColor = Color.WHITE;
-        TextButton button = new TextButton("Play the game", style);
-        button.setSize(1,1);
-        button.setPosition(7,5, Align.center);
+        Texture up = new Texture(Gdx.files.internal("backgrounds/custom_image_up.png"));
+        //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
+
+        Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
+        Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
+        ImageButton button = new ImageButton(upp, downn);
+        button.setSize(3,2);
+        button.setPosition(9,4);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -93,7 +102,8 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float v) {
-        ScreenUtils.clear(Color.BLACK);
+        Color color = Color.valueOf("#6e74b2");
+        ScreenUtils.clear(color.r, color.g, color.b, color.a);
         buttonsStage.act(v);
         buttonsStage.draw();
         gameButtonStage.act(v);
@@ -131,6 +141,7 @@ public class SettingsScreen implements Screen {
         buttonsStage.clear();
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = game.getFont();
+        style.font.getRegion().getTexture().setFilter(Linear, Linear);
         style.fontColor = Color.WHITE;
 
         //najpierw odczytanie klawiszy
@@ -146,7 +157,7 @@ public class SettingsScreen implements Screen {
         for(int i = 0; i < columnCount; i++) {
             TextButton button = new TextButton("Column " + String.valueOf(i+1) + " : " + Input.Keys.toString(keycodes.get(i)), style);
             button.setSize(1,1);
-            button.setPosition(5,9-i*0.7f, Align.right);
+            button.setPosition(5,8.5f-(i)*0.7f, Align.right);
             int finalI = i;
             button.addListener(new ClickListener() {
                 @Override

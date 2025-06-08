@@ -3,10 +3,16 @@ package io.mainia.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
@@ -30,12 +36,14 @@ public class FailScreen implements Screen {
 
     @Override
     public void show() {
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = game.getFont();
-        style.fontColor = Color.WHITE;
-        TextButton button = new TextButton("Try again", style);
-        button.setSize(1,1);
-        button.setPosition(5,5);
+        Texture up = new Texture(Gdx.files.internal("tryagain_lose.png"));
+        //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
+
+        Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
+        Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
+        ImageButton button = new ImageButton(upp,downn);
+        button.setSize(3,2);
+        button.setPosition(8,6, Align.center);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -45,9 +53,14 @@ public class FailScreen implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         stage.addActor(button);
-        TextButton button2 = new TextButton("Select another level", style);
-        button2.setSize(1,1);
-        button2.setPosition(5,4);
+        Texture up1 = new Texture(Gdx.files.internal("select_another.png"));
+        //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
+
+        Drawable upp1 = new TextureRegionDrawable(new TextureRegion(up1));
+        Drawable downn1 = new TextureRegionDrawable(new TextureRegion(up1));
+        ImageButton button2 = new ImageButton(upp1,downn1);
+        button2.setSize(3,2);
+        button2.setPosition(8,4, Align.center);
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -60,11 +73,12 @@ public class FailScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.RED);
+        Color color = Color.valueOf("#a01c1c");
+        ScreenUtils.clear(color.r, color.g, color.b, color.a);
         stage.act(delta);
         stage.draw();
         game.getBatch().begin();
-        game.getFont().draw(game.getBatch(), "You lost the game", 5, 9);
+        game.getFont().draw(game.getBatch(), "You lost the game!", 6.7f, 9);
         game.getBatch().end();
     }
 

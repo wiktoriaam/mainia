@@ -9,9 +9,11 @@ music/Cancan.ogg
 music/turkish_march.ogg
 perfect_window.png
 results/easy.mainiasc
-results/poziom.mainiasc
-results/sliderTest.mainiasc
+select_another.png
 settings/settings.mainia
 slider_end.png
 slider_middle.png
 slider_start.png
+tryagain_lose.png
+tryagain_neutral.png
+tryagain_win.png

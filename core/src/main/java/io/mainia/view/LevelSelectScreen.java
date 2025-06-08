@@ -5,15 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
@@ -64,7 +63,6 @@ public class LevelSelectScreen implements Screen {
         List.ListStyle listStyle = new List.ListStyle();
         listStyle.font = game.getFont();
         listStyle.fontColorSelected = Color.BLUE;
-        listStyle.fontColorUnselected = Color.RED;
         listStyle.selection = new TextureRegionDrawable(new Texture(selectBoxTexturePath));
         selectBoxStyle.listStyle = listStyle;
         selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
@@ -74,12 +72,13 @@ public class LevelSelectScreen implements Screen {
 
         //actual selectbox
         selectBox = new SelectBox<>(selectBoxStyle);
-        selectBox.setAlignment(Align.center);
-        selectBox.setPosition(3.5f,7);
+        selectBox.setPosition(6.5f,4);
         selectBox.setSize(3,2);
         FileHandle levels = Gdx.files.internal(levelFilesPath);
         Array<String> levelNames = new Array<>();
         for(FileHandle level : levels.list()) {levelNames.add(level.nameWithoutExtension());}
+        selectBox.getList().setStyle(listStyle);
+        selectBox.getList().setWidth(4);
         selectBox.setItems(levelNames);
         selectBox.addListener(new ChangeListener() {
            @Override
@@ -101,9 +100,14 @@ public class LevelSelectScreen implements Screen {
         });
 
         //actual button
-        TextButton button = new TextButton("Play", style);
-        button.setSize(1,1);
-        button.setPosition(5,5, Align.center);
+        Texture up = new Texture(Gdx.files.internal("backgrounds/custom_image_up.png"));
+        //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
+
+        Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
+        Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
+        ImageButton button = new ImageButton(upp, downn);
+        button.setSize(3,1.5f);
+        button.setPosition(8f,3, Align.center);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -145,10 +149,11 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void render(float v) {
-        ScreenUtils.clear(Color.BLACK);
+        Color color = Color.valueOf("#6e74b2");
+        ScreenUtils.clear(color.r, color.g, color.b, color.a);
         stage.act(v);
         stage.draw();
-
+        game.getViewport().apply();
         game.getBatch().begin();
         StringBuilder scoreboard = new StringBuilder("Scoreboard:\n");
         int i=0;
@@ -159,7 +164,7 @@ public class LevelSelectScreen implements Screen {
         }
         game.getFont().draw(game.getBatch(),
                 scoreboard,
-                0.2f, 9);
+                7, 9.5f);
         game.getBatch().end();
     }
 
