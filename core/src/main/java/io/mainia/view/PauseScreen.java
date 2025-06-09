@@ -95,13 +95,14 @@ public class PauseScreen implements Screen {
             //najpierw trzeba node'y poprzesuwać znwou w góre(tylko te które jeszcze nie były kliknięte!!!) - żeby dalej mogły być poprawnie kliknięte, działa cała logika
             for(int i = 0; i < gameplayViewModel.getColumnCount(); i++){
                 for(Sprite s : gameplayViewModel.getNoteSprites().get(i)){
-                    float y = s.getY();
-                    s.setY(y + gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
+                    s.translateY(gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
                 }
             }
+            for(Sprite s : gameplayViewModel.getSliderSprites()) {
+                s.translateY(gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
+            }
             for(Sprite s : gameplayViewModel.getMissed()){
-                float y = s.getY();
-                s.setY(y + gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
+                s.translateY( gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
             }
             game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, customOffset, stopTime, timeAfterPause));
         }
