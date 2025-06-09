@@ -20,6 +20,7 @@ perfect_window.png
 plus.png
 results/allColumnsTest.mainiasc
 results/easy.mainiasc
+results/oneColumnLevel.mainiasc
 results/poziom.mainiasc
 results/sliderTest.mainiasc
 select_another.png

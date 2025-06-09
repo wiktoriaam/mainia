@@ -26,6 +26,7 @@ import io.mainia.services.ResultsReader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class LevelSelectScreen implements Screen {
@@ -54,7 +55,7 @@ public class LevelSelectScreen implements Screen {
         //styles for selectbox and button
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = game.getFont();
-        style.fontColor = Color.WHITE;
+        style.fontColor = Color.BLUE;
 
         SelectBox.SelectBoxStyle selectBoxStyle = new SelectBox.SelectBoxStyle();
         selectBoxStyle.font = game.getFont();
@@ -66,7 +67,7 @@ public class LevelSelectScreen implements Screen {
         listStyle.selection = new TextureRegionDrawable(new Texture(selectBoxTexturePath));
         selectBoxStyle.listStyle = listStyle;
         selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
-        selectBoxStyle.scrollStyle.background = new TextureRegionDrawable(new Texture(listBackgroundTexturePath));
+        //selectBoxStyle.scrollStyle.background = new TextureRegionDrawable(new Texture(listBackgroundTexturePath));
 
 
 
@@ -88,6 +89,7 @@ public class LevelSelectScreen implements Screen {
                    if (plik.exists()) {
                        ResultsReader rr = new ResultsReader(plik);
                        results = rr.readResults();
+
                    }
                    else{
                        results = new ArrayList<>();
