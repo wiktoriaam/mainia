@@ -157,10 +157,11 @@ public class LevelSelectScreen implements Screen {
         game.getBatch().begin();
         StringBuilder scoreboard = new StringBuilder("Scoreboard:\n");
         int i=0;
-        for(Result r : results) {
-            if(i==10) break;
-            i++;
-            scoreboard.append("#").append(i).append("    ").append(r.score()).append("\n");
+        ArrayList<Integer> scores = new ArrayList<>();
+        for(Result result : results) scores.add(result.score());
+        scores.sort(Integer::compareTo);
+        for(int j=scores.size()-1,m=1;j>= scores.size()-9 && j>=0;j--,m++) {
+            scoreboard.append("#").append(m).append("    ").append(scores.get(j)).append("\n");
         }
         game.getFont().draw(game.getBatch(),
                 scoreboard,
