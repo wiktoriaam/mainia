@@ -31,14 +31,16 @@ public class PauseScreen implements Screen {
     //stopTime - czas w grze w którym następiło zatrzymanie gry, timeAfterPause - offset po wznowieniu
     private final float stopTime;
     private final float timeAfterPause;
+    private final float customOffset;
 
-    public PauseScreen(Mainia game, GameplayViewModel gameplayViewModel, List<Integer> keymap, float stopTime) {
+    public PauseScreen(Mainia game, GameplayViewModel gameplayViewModel, List<Integer> keymap, float stopTime, float customOffset) {
         this.game = game;
         stage = new Stage(game.getViewport());
         this.gameplayViewModel = gameplayViewModel;
         this.keymap = keymap;
         this.stopTime = stopTime;
-        this.timeAfterPause = 1000;
+        this.timeAfterPause = 1100;
+        this.customOffset = customOffset;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class PauseScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime(), -gameplayViewModel.getLevel().startTime(), 0));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime(), customOffset, 0, -gameplayViewModel.getLevel().startTime()));
                 dispose();
             }
         });
@@ -101,7 +103,7 @@ public class PauseScreen implements Screen {
                 float y = s.getY();
                 s.setY(y + gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
             }
-            game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, timeAfterPause, stopTime));
+            game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, customOffset, stopTime, timeAfterPause));
         }
     }
 

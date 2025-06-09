@@ -32,13 +32,15 @@ public class WinScreen implements Screen {
     private final Level level;
     private final List<Integer> keymap;
     private final Score score;
+    private final float customOffset;
 
-    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score) {
+    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score, float customOffset) {
         this.game = game;
         stage = new Stage(game.getViewport());
         this.level = level;
         this.keymap = keymap;
         this.score = score;
+        this.customOffset = customOffset;
     }
 
     @Override
@@ -54,7 +56,7 @@ public class WinScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), -level.startTime(), 0));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), customOffset, 0, -level.startTime()));
                 dispose();
             }
         });

@@ -10,12 +10,14 @@ levelfiles/easy.mainiabm
 levelfiles/oneColumnLevel.mainiabm
 levelfiles/poziom.mainiabm
 levelfiles/sliderTest.mainiabm
+minus.png
 miss_popup.png
 music/Cancan.ogg
 music/turkish_march.ogg
 ok_popup.png
 perfect_popup.png
 perfect_window.png
+plus.png
 results/allColumnsTest.mainiasc
 results/easy.mainiasc
 results/poziom.mainiasc

@@ -46,6 +46,8 @@ public class GameplayScreen implements Screen {
     public final float musicStartTime;
     //moment pliku dzwiekowaego w ktorym zaczyna grac muzyka, ms
     public final float musicTimeStamp;
+    public final float noteStartTime;
+    public final float customOffset;
     private final Mainia game;
     private final GameplayViewModel gameplayViewModel;
     public final Texture noteTexture;
@@ -65,7 +67,7 @@ public class GameplayScreen implements Screen {
 //    public float worldHeight;
 //    public float worldWidth;
 
-    public GameplayScreen(final Mainia game, final GameplayViewModel gameplayViewModel, final List<Integer> keymap, float startTime, float musicStartTime, float musicTimeStamp) {
+    public GameplayScreen(final Mainia game, final GameplayViewModel gameplayViewModel, final List<Integer> keymap, float startTime, float customOffset, float musicTimeStamp, float noteStartTime) {
         //gra
         this.game = game;
         this.gameplayViewModel = gameplayViewModel;
@@ -76,8 +78,10 @@ public class GameplayScreen implements Screen {
         System.out.println(Input.Keys.SPACE);
 
         //grafika i audio
-        this.musicStartTime = musicStartTime;
+        this.customOffset = customOffset;
+        this.musicStartTime = noteStartTime+1000*customOffset;
         this.musicTimeStamp = musicTimeStamp;
+        this.noteStartTime = noteStartTime;
 //        worldHeight = game.getViewport().getWorldHeight();
 //        worldWidth = game.getViewport().getWorldWidth();
         noteTexture  = new Texture(noteTexturePath);
@@ -159,7 +163,7 @@ public class GameplayScreen implements Screen {
 
         //onPressUpdate w momencie kliknięcia (tylko jesli juz mozna klikac - czyli jak juz minie mucisStartTime
         timeSinceHold += delta;
-        if(currentTime-startTime>=musicStartTime) {
+        if(currentTime-startTime>=noteStartTime) {
             for (int i = 0; i < keymap.size(); i++) {
                 if(Gdx.input.isKeyPressed(keymap.get(i))) {
                     if(timeSinceHold >= 0.01f) {
@@ -180,9 +184,9 @@ public class GameplayScreen implements Screen {
         }
 
         //sprawdzenie czy wciśnięto Esc - jesli tak to PauseScreen
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && currentTime-startTime>=musicStartTime) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && currentTime-startTime>=noteStartTime) {
             music.pause();
-            game.setScreen(new PauseScreen(game, gameplayViewModel, keymap, currentTime));
+            game.setScreen(new PauseScreen(game, gameplayViewModel, keymap, currentTime, customOffset));
         }
     }
 
@@ -219,12 +223,12 @@ public class GameplayScreen implements Screen {
     }
 
     private void fail() {
-        game.setScreen(new FailScreen(game, gameplayViewModel.getLevel(), keymap));
+        game.setScreen(new FailScreen(game, gameplayViewModel.getLevel(), keymap, customOffset));
         dispose();
     }
 
     private void win(){
-        game.setScreen(new WinScreen(game, gameplayViewModel.getLevel(), keymap, gameplayViewModel.getScore()));
+        game.setScreen(new WinScreen(game, gameplayViewModel.getLevel(), keymap, gameplayViewModel.getScore(), customOffset));
         try {
             gameplayViewModel.addNewResult();
         }
