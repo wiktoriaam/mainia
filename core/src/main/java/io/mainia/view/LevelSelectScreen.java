@@ -167,8 +167,8 @@ public class LevelSelectScreen implements Screen {
         all_buttons.add(button_perfect);
 
         ImageButton.ImageButtonStyle hr_style = new ImageButton.ImageButtonStyle();
-        hr_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_unselected.png"))));
-        hr_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_selected.png"))));
+        hr_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/hardrock_unselected.png"))));
+        hr_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/hardrock_selected.png"))));
         ImageButton button_hr = new ImageButton(hr_style);
         button_hr.setSize(3,1.5f);
         button_hr.setPosition(12.5f,2, Align.center);

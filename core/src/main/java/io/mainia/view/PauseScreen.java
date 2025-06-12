@@ -54,7 +54,7 @@ public class PauseScreen implements Screen {
         Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
         ImageButton button = new ImageButton(upp,downn);
         button.setSize(3,2);
-        button.setPosition(8,4, Align.center);
+        button.setPosition(8,5, Align.center);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -71,7 +71,7 @@ public class PauseScreen implements Screen {
         Drawable downn1 = new TextureRegionDrawable(new TextureRegion(up1));
         ImageButton button2 = new ImageButton(upp1,downn1);
         button2.setSize(3,2);
-        button2.setPosition(8,6, Align.center);
+        button2.setPosition(8,7, Align.center);
         button2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -79,6 +79,33 @@ public class PauseScreen implements Screen {
                 dispose();
             }
         });
+
+        Texture down_volume = new Texture(Gdx.files.internal("buttons/minus.png"));
+        Texture up_volume = new Texture(Gdx.files.internal("buttons/plus.png"));
+        Drawable upp1_volume = new TextureRegionDrawable(new TextureRegion(up_volume));
+        Drawable downn1_volume = new TextureRegionDrawable(new TextureRegion(down_volume));
+
+        ImageButton button_add_volume = new ImageButton(downn1_volume, downn1_volume);
+        button_add_volume.setSize(0.7f,0.7f);
+        button_add_volume.setPosition(7,3, Align.center);
+        button_add_volume.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(volume>=0.099f)volume-=0.1f;
+            }
+        });
+        ImageButton button_decrease_volume = new ImageButton(upp1_volume, upp1_volume);
+        button_decrease_volume.setSize(0.7f,0.7f);
+        button_decrease_volume.setPosition(10,3, Align.center);
+        button_decrease_volume.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(volume<=0.901f)volume+=0.1f;
+            }
+        });
+
+        stage.addActor(button_add_volume);
+        stage.addActor(button_decrease_volume);
         stage.addActor(button2);
     }
 
@@ -92,6 +119,8 @@ public class PauseScreen implements Screen {
         game.getFont().draw(game.getBatch(),
                 "You paused the game! Press Esc to resume.",
                 5f, 9);
+        game.getFont().draw(game.getBatch(), "Volume :", 5, 3.4f);
+        game.getFont().draw(game.getBatch(), String.format("%.0f", (int) 100*volume) + "%", 8.3f, 3.4f);
         game.getBatch().end();
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             //najpierw trzeba node'y poprzesuwać znwou w góre(tylko te które jeszcze nie były kliknięte!!!) - żeby dalej mogły być poprawnie kliknięte, działa cała logika
