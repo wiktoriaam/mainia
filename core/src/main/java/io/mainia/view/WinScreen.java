@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
+import io.mainia.model.Combo;
 import io.mainia.model.Level;
 import io.mainia.model.Score;
 import io.mainia.viewmodel.GameplayViewModel;
@@ -33,8 +34,10 @@ public class WinScreen implements Screen {
     private final List<Integer> keymap;
     private final Score score;
     private final float customOffset;
+    private final int maxCombo;
 
-    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score, float customOffset) {
+    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score, int combo , float customOffset) {
+        this.maxCombo=combo;
         this.game = game;
         stage = new Stage(game.getViewport());
         this.level = level;
@@ -89,6 +92,7 @@ public class WinScreen implements Screen {
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(),
                 "Score: " + score.currentScore() + "\n" +
+                "Highest Combo: " + maxCombo + "\n" +
                 "Perfect: " + score.NoOfPerfects() + "\n" +
                 "Great: " + score.NoOfGreats() + "\n" +
                 "OK: " + score.tNoOfOks() + "\n" +

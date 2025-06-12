@@ -170,4 +170,6 @@ public class GameplayViewModel {
     public int getCombo(){
         return combo.currentCombo();
     }
+
+    public int getHighestCombo() {return combo.highestCombo();}
 }

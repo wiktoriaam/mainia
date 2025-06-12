@@ -30,9 +30,7 @@ perfect_popup.png
 perfect_window.png
 results/allColumnsTest.mainiasc
 results/easy.mainiasc
-results/oneColumnLevel.mainiasc
 results/poziom.mainiasc
-results/sliderTest.mainiasc
 settings/settings.mainia
 slider_end.png
 slider_middle.png

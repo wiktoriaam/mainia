@@ -228,7 +228,7 @@ public class GameplayScreen implements Screen {
     }
 
     private void win(){
-        game.setScreen(new WinScreen(game, gameplayViewModel.getLevel(), keymap, gameplayViewModel.getScore(), customOffset));
+        game.setScreen(new WinScreen(game, gameplayViewModel.getLevel(), keymap, gameplayViewModel.getScore(), gameplayViewModel.getCombo() , customOffset));
         try {
             gameplayViewModel.addNewResult();
         }

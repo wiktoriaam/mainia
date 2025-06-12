@@ -3,6 +3,7 @@ package io.mainia.model;
 public class Combo {
     private int combo=0;
     private int holdcounter=0;
+    private int maxCombo=0;
 
     public Combo() {}
 
@@ -19,9 +20,14 @@ public class Combo {
             case NONE -> {}
             default -> combo+=1;
         }
+        if(combo>maxCombo) maxCombo=combo;
     }
 
     public int currentCombo(){
         return combo;
+    }
+
+    public int highestCombo(){
+        return maxCombo;
     }
 }
