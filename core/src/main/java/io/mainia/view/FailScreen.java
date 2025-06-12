@@ -27,13 +27,15 @@ public class FailScreen implements Screen {
     private final Level level;
     private final List<Integer> keymap;
     private final float customOffset;
+    private final float volume;
 
-    public FailScreen(Mainia game, Level level, List<Integer> keymap, float customOffset) {
+    public FailScreen(Mainia game, Level level, List<Integer> keymap, float customOffset, float volume) {
         this.game = game;
         stage = new Stage(game.getViewport());
         this.level = level;
         this.keymap = keymap;
         this.customOffset = customOffset;
+        this.volume = volume;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class FailScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), customOffset, 0, -level.startTime()));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), customOffset, 0, -level.startTime(), volume));
                 dispose();
             }
         });

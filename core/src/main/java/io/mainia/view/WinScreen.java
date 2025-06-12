@@ -35,8 +35,9 @@ public class WinScreen implements Screen {
     private final Score score;
     private final float customOffset;
     private final int maxCombo;
+    private final float volume;
 
-    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score, int combo , float customOffset) {
+    public WinScreen(Mainia game, Level level, List<Integer> keymap, Score score, int combo , float customOffset, float volume) {
         this.maxCombo=combo;
         this.game = game;
         stage = new Stage(game.getViewport());
@@ -44,6 +45,7 @@ public class WinScreen implements Screen {
         this.keymap = keymap;
         this.score = score;
         this.customOffset = customOffset;
+        this.volume = volume;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class WinScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), customOffset, 0, -level.startTime()));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymap, level.startTime(), customOffset, 0, -level.startTime(), volume));
                 dispose();
             }
         });

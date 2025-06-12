@@ -33,6 +33,7 @@ public class SettingsScreen implements Screen {
     int columnCount;//bo ekran ustawien jest po wyborze levelu
     private String[] keys;
     float customOffset = 0;//in miliseconds
+    float volume = 0.5f;
 
     private final InputAdapter inputAdapter;
     InputMultiplexer inputMultiplexer = new InputMultiplexer();//zeby wczytywac input zarowno od przyciskow jak i z klawiatury
@@ -82,13 +83,13 @@ public class SettingsScreen implements Screen {
         Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
         ImageButton button = new ImageButton(upp, downn);
         button.setSize(3,2);
-        button.setPosition(9,4);
+        button.setPosition(9,3);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
                     KeymapReader keymapReader = new KeymapReader();
-                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.columnCount()), level.startTime(), customOffset, 0, -level.startTime()));
+                    game.setScreen(new GameplayScreen(game, new GameplayViewModel(level), keymapReader.readKeymap(level.columnCount()), level.startTime(), customOffset, 0, -level.startTime(), volume));
                     dispose();
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
@@ -126,6 +127,28 @@ public class SettingsScreen implements Screen {
                 if(customOffset>=-0.901f)customOffset-=0.1f;
             }
         });
+
+        ImageButton button_add_volume = new ImageButton(upp2, downn2);
+        button_add_volume.setSize(0.7f,0.7f);
+        button_add_volume.setPosition(9,6);
+        button_add_volume.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(volume>=0.099f)volume-=0.1f;
+            }
+        });
+        ImageButton button_decrease_volume = new ImageButton(upp1, downn1);
+        button_decrease_volume.setSize(0.7f,0.7f);
+        button_decrease_volume.setPosition(12,6);
+        button_decrease_volume.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(volume<=0.901f)volume+=0.1f;
+            }
+        });
+
+        stage2.addActor(button_add_volume);
+        stage2.addActor(button_decrease_volume);
         stage2.addActor(button2);
 
         inputMultiplexer.addProcessor(buttonsStage);
@@ -141,7 +164,9 @@ public class SettingsScreen implements Screen {
         ScreenUtils.clear(color.r, color.g, color.b, color.a);
         game.getBatch().begin();
         game.getFont().draw(game.getBatch(), "Time offset:", 7, 8.5f);
+        game.getFont().draw(game.getBatch(), "Volume :", 7, 6.5f);
         game.getFont().draw(game.getBatch(), String.format("%.2f", customOffset), 10.8f, 8.5f);
+        game.getFont().draw(game.getBatch(), String.format("%.0f", (int) 100*volume) + "%", 10.8f, 6.5f);
         game.getBatch().end();
         gameButtonStage.act(v);
         gameButtonStage.draw();

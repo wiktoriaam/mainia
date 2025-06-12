@@ -32,8 +32,9 @@ public class PauseScreen implements Screen {
     private final float stopTime;
     private final float timeAfterPause;
     private final float customOffset;
+    private float volume;
 
-    public PauseScreen(Mainia game, GameplayViewModel gameplayViewModel, List<Integer> keymap, float stopTime, float customOffset) {
+    public PauseScreen(Mainia game, GameplayViewModel gameplayViewModel, List<Integer> keymap, float stopTime, float customOffset, float volume) {
         this.game = game;
         stage = new Stage(game.getViewport());
         this.gameplayViewModel = gameplayViewModel;
@@ -41,6 +42,7 @@ public class PauseScreen implements Screen {
         this.stopTime = stopTime;
         this.timeAfterPause = 1100;
         this.customOffset = customOffset;
+        this.volume = volume;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class PauseScreen implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime(), customOffset, 0, -gameplayViewModel.getLevel().startTime()));
+                game.setScreen(new GameplayScreen(game, new GameplayViewModel(gameplayViewModel.getLevel()), keymap, gameplayViewModel.getLevel().startTime(), customOffset, 0, -gameplayViewModel.getLevel().startTime(), volume));
                 dispose();
             }
         });
@@ -104,7 +106,7 @@ public class PauseScreen implements Screen {
             for(Sprite s : gameplayViewModel.getMissed()){
                 s.translateY( gameplayViewModel.getLevel().speed()*timeAfterPause/1000);
             }
-            game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, customOffset, stopTime, timeAfterPause));
+            game.setScreen(new GameplayScreen(game, gameplayViewModel, keymap, stopTime-timeAfterPause, customOffset, stopTime, timeAfterPause, volume));
         }
     }
 
