@@ -1,5 +1,5 @@
 package io.mainia.model;
 
 public enum Modifier {
-    NOFAIL, NOMISS, PERFECT
+    NOFAIL, NOMISS, PERFECT, HARDROCK
 }

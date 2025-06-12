@@ -18,7 +18,7 @@ public class GameplayViewModel {
     //level info
     private final Level level;
     private final List<List<Note>> notes;
-    private final float speed;
+    private float speed;
     private final int columnCount;
     //sprites(temporary) TODO: switch location of the sprites array to view
     private ArrayList<Array<Sprite>> noteSprites = new ArrayList<>();
@@ -42,7 +42,12 @@ public class GameplayViewModel {
         noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
         firstToHit = new int[columnCount];
         firstToAdd = new int[columnCount];
-        score = new Score(level.modifiers().contains(Modifier.NOFAIL) ? 0.5f : 1);
+
+        float mult =1;
+        if(level.modifiers().contains(Modifier.NOFAIL)) mult*=0.5f;
+        if(level.modifiers().contains(Modifier.HARDROCK)) {mult*=1.2f;speed*=1.2f;};
+
+        score = new Score(mult);
         for(int i=0; i<columnCount; i++) {
             noteSprites.add(new Array<>());
             if(notes.get(i).isEmpty()){
@@ -52,7 +57,7 @@ public class GameplayViewModel {
         }
         perfectHitHeight = 0.2f;
         if(level.isHealthStatic()) health = new StaticHealth(level.healthAmount());
-        else health = new DynamicHealth(level.healthAmount());
+        else health = new DynamicHealth(level.healthAmount(),level.modifiers().contains(Modifier.HARDROCK));
     }
 
     public boolean update(float currentTime, Texture noteTexture, Texture sliderStartTexture, Texture sliderMiddleTexture, Texture sliderEndTexture) {

@@ -166,9 +166,19 @@ public class LevelSelectScreen implements Screen {
         button_modifiers.put(button_perfect, Modifier.PERFECT);
         all_buttons.add(button_perfect);
 
+        ImageButton.ImageButtonStyle hr_style = new ImageButton.ImageButtonStyle();
+        hr_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_unselected.png"))));
+        hr_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_selected.png"))));
+        ImageButton button_hr = new ImageButton(hr_style);
+        button_hr.setSize(3,1.5f);
+        button_hr.setPosition(12.5f,2, Align.center);
+        button_modifiers.put(button_hr, Modifier.HARDROCK);
+        all_buttons.add(button_hr);
+
         restrictions.put(button_nofail, new ArrayList<>(Arrays.asList(button_nomiss, button_perfect)));
         restrictions.put(button_nomiss, new ArrayList<>(Arrays.asList(button_nofail)));
         restrictions.put(button_perfect, new ArrayList<>(Arrays.asList(button_nofail)));
+        restrictions.put(button_hr, new ArrayList<>(Arrays.asList()));
 
         for(ImageButton b : all_buttons){
             stage.addActor(b);
