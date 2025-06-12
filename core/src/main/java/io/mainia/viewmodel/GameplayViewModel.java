@@ -38,16 +38,21 @@ public class GameplayViewModel {
         this.startingTime = level.startTime();
         notes = level.notes();
         speed = level.speed();
+        
+        float scoreMult =1;
+        float speedMod=1;
+        if(level.modifiers().contains(Modifier.NOFAIL)) scoreMult*=0.5f;
+        if(level.modifiers().contains(Modifier.HARDROCK)) {scoreMult*=1.2f;speed*=1.2f;speedMod=1.2f;};
+
+
         columnCount = level.columnCount();
-        noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
+        noteSpriteFactory = new NoteSpriteFactory(columnWidth, level,speedMod);
         firstToHit = new int[columnCount];
         firstToAdd = new int[columnCount];
 
-        float mult =1;
-        if(level.modifiers().contains(Modifier.NOFAIL)) mult*=0.5f;
-        if(level.modifiers().contains(Modifier.HARDROCK)) {mult*=1.2f;speed*=1.2f;};
 
-        score = new Score(mult);
+
+        score = new Score(scoreMult);
         for(int i=0; i<columnCount; i++) {
             noteSprites.add(new Array<>());
             if(notes.get(i).isEmpty()){

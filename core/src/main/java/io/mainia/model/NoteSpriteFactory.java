@@ -9,8 +9,10 @@ import static io.mainia.view.GameplayScreen.perfectHitHeight;
 public class NoteSpriteFactory {
     private final float columnWidth;
     private final Level level;
+    private final float speedMod;
 
-    public NoteSpriteFactory(float columnWidth, Level level) {
+    public NoteSpriteFactory(float columnWidth, Level level, float speedModifier) {
+        speedMod = speedModifier;
         this.level = level;
         this.columnWidth = columnWidth;
     }
@@ -20,7 +22,7 @@ public class NoteSpriteFactory {
     }
 
     public float calculateY(float currentTime, float hitTime) {
-        return perfectHitHeight*worldHeight + (hitTime - currentTime) * level.speed()/1000;
+        return perfectHitHeight*worldHeight + (hitTime - currentTime) * (level.speed()*speedMod)/1000;
     }
 
     public ArrayList<Float> buildHit(Note hitNote, int column, float currentTime) {
