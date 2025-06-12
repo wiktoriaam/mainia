@@ -15,11 +15,11 @@ public class DynamicHealth implements Health {
     }
 
     @Override
-    public void updateHealth(HitResult hitResult){
+    public void updateHealth(HitResult hitResult, boolean nomiss, boolean perfect){
         switch(hitResult){
-            case MISS -> health-=1;
-            case OK -> health-=0.2f;
-            case GREAT -> health+=0.3f;
+            case MISS -> {if(nomiss || perfect) health=0; else health-=1;}
+            case OK -> {if(perfect) health=0; else health-=0.2f;}
+            case GREAT -> {if(perfect) health=0; else health+=0.3f;}
             case PERFECT -> health+=0.5f;
             case HOLD -> health+=0.01f;
         }

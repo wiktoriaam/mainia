@@ -5,17 +5,17 @@ import io.mainia.model.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class LevelFileReader {
     private final File file;
     private final String resultLocation;
+    private final HashSet<Modifier> modifiers;
 
-    public LevelFileReader(String filePath,String resultLocation) {
+    public LevelFileReader(String filePath,String resultLocation, HashSet<Modifier> modifiers) {
         file = new File(filePath);
         this.resultLocation = resultLocation;
+        this.modifiers = modifiers;
     }
 
     public Level readLevel() throws IOException {
@@ -93,7 +93,7 @@ public class LevelFileReader {
         if(length==-1) throw new WrongFileFormatException("Length not found");
         if(startTime==-1) throw new WrongFileFormatException("StartTime not found");
 
-        return new Level(speed, notes, columnCount, length, musicFilename, startTime,healthAmount,stat,resultLocation);
+        return new Level(speed, notes, columnCount, length, musicFilename, startTime,healthAmount,stat,resultLocation, modifiers);
 
     }
 

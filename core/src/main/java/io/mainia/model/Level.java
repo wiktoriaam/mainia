@@ -1,5 +1,6 @@
 package io.mainia.model;
 
+import java.util.HashSet;
 import java.util.List;
 
 public record Level(float speed,
@@ -10,6 +11,6 @@ public record Level(float speed,
                     float startTime,
                     float healthAmount,
                     boolean isHealthStatic,
-                    String resultLocation) {
-
+                    String resultLocation,
+                    HashSet<Modifier> modifiers) {
 }

@@ -32,7 +32,7 @@ public class  MainMenuScreen implements Screen {
         titleImage.setPosition(3,2);
         stage.addActor(titleImage);
 
-        Texture up = new Texture(Gdx.files.internal("backgrounds/custom_image_up.png"));
+        Texture up = new Texture(Gdx.files.internal("buttons/play_button.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp = new TextureRegionDrawable(new TextureRegion(up));

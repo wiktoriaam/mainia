@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -19,14 +20,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import io.mainia.Mainia;
 import io.mainia.model.Level;
+import io.mainia.model.Modifier;
 import io.mainia.model.Result;
 import io.mainia.services.KeymapReader;
 import io.mainia.services.LevelFileReader;
 import io.mainia.services.ResultsReader;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 
 public class LevelSelectScreen implements Screen {
@@ -42,6 +43,12 @@ public class LevelSelectScreen implements Screen {
     private LevelFileReader levelFileReader;
     private KeymapReader keymapReader;
     private SelectBox<String> selectBox;
+
+    Map<ImageButton, Modifier> button_modifiers = new HashMap<>();
+    ArrayList<ImageButton> all_buttons = new ArrayList<>();
+    Map<ImageButton, ArrayList<ImageButton>> restrictions = new HashMap<>();
+
+    private HashSet<Modifier> modifiers = new HashSet<Modifier>();
 
     private ArrayList<Result> results = new ArrayList<>();
 
@@ -73,7 +80,7 @@ public class LevelSelectScreen implements Screen {
 
         //actual selectbox
         selectBox = new SelectBox<>(selectBoxStyle);
-        selectBox.setPosition(6.5f,4);
+        selectBox.setPosition(4.5f,4);
         selectBox.setSize(3,2);
         FileHandle levels = Gdx.files.internal(levelFilesPath);
         Array<String> levelNames = new Array<>();
@@ -102,20 +109,24 @@ public class LevelSelectScreen implements Screen {
         });
 
         //actual button
-        Texture up = new Texture(Gdx.files.internal("backgrounds/custom_image_up.png"));
-        //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
+        Texture up = new Texture(Gdx.files.internal("buttons/play_button.png"));
 
         Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
-        Drawable downn = new TextureRegionDrawable(new TextureRegion(up));
-        ImageButton button = new ImageButton(upp, downn);
+        ImageButton button = new ImageButton(upp, upp);
         button.setSize(3,1.5f);
-        button.setPosition(8f,3, Align.center);
+        button.setPosition(4.5f,2.5f);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 String levelPath = levelFilesPath + selectBox.getSelected() + levelExtension;
                 String resultPath = resultsPath + selectBox.getSelected() + resultExtension;
-                levelFileReader = new LevelFileReader(levelPath,resultPath);
+                for(ImageButton b : all_buttons) {
+                    if(b.isChecked()) {
+                        modifiers.add(button_modifiers.get(b));
+                    }
+                }
+                for(Modifier m : modifiers)System.out.println(m);
+                levelFileReader = new LevelFileReader(levelPath,resultPath, modifiers);
                 try {
                     Level level = levelFileReader.readLevel();
                     game.setScreen(new SettingsScreen(game, level.columnCount(), level));
@@ -126,6 +137,62 @@ public class LevelSelectScreen implements Screen {
                 }
             }
         });
+
+        //BUTTONS FOR MODIFIERS!!
+        ImageButton.ImageButtonStyle nofail_style = new ImageButton.ImageButtonStyle();
+        nofail_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/no_fail_unselected.png"))));
+        nofail_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/no_fail_selected.png"))));
+        ImageButton button_nofail = new ImageButton(nofail_style);
+        button_nofail.setSize(3,1.5f);
+        button_nofail.setPosition(12.5f,8, Align.center);
+        button_modifiers.put(button_nofail, Modifier.NOFAIL);
+        all_buttons.add(button_nofail);
+
+        ImageButton.ImageButtonStyle nomiss_style = new ImageButton.ImageButtonStyle();
+        nomiss_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/no_miss_unselected.png"))));
+        nomiss_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/no_miss_selected.png"))));
+        ImageButton button_nomiss = new ImageButton(nomiss_style);
+        button_nomiss.setSize(3,1.5f);
+        button_nomiss.setPosition(12.5f,6, Align.center);
+        button_modifiers.put(button_nomiss, Modifier.NOMISS);
+        all_buttons.add(button_nomiss);
+
+        ImageButton.ImageButtonStyle perfect_style = new ImageButton.ImageButtonStyle();
+        perfect_style.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_unselected.png"))));
+        perfect_style.checked = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("buttons/perfect_selected.png"))));
+        ImageButton button_perfect = new ImageButton(perfect_style);
+        button_perfect.setSize(3,1.5f);
+        button_perfect.setPosition(12.5f,4, Align.center);
+        button_modifiers.put(button_perfect, Modifier.PERFECT);
+        all_buttons.add(button_perfect);
+
+        restrictions.put(button_nofail, new ArrayList<>(Arrays.asList(button_nomiss, button_perfect)));
+        restrictions.put(button_nomiss, new ArrayList<>(Arrays.asList(button_nofail)));
+        restrictions.put(button_perfect, new ArrayList<>(Arrays.asList(button_nofail)));
+
+        for(ImageButton b : all_buttons){
+            stage.addActor(b);
+        }
+
+        ClickListener listener = new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ImageButton clicked = (ImageButton) event.getListenerActor();
+                boolean new_state = clicked.isChecked();
+                System.out.println(new_state);
+                if(new_state){
+                    for(ImageButton b : restrictions.get(clicked)){
+                        b.setChecked(false);
+                    }
+                }
+
+                clicked.setChecked(new_state);
+            }
+        };
+        for(ImageButton b : all_buttons){
+            b.addListener(listener);
+        }
+
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(selectBox);
@@ -167,7 +234,7 @@ public class LevelSelectScreen implements Screen {
         }
         game.getFont().draw(game.getBatch(),
                 scoreboard,
-                7, 9.5f);
+                4.5f, 9f);
         game.getBatch().end();
     }
 

@@ -26,7 +26,7 @@ public class GameplayViewModel {
     private Array<Sprite> missedSprites = new Array<>();
     private int[] firstToHit;
     private int[] firstToAdd;
-    private final Score score = new Score();
+    private final Score score;
     private final float startingTime;
     private final Health health;
     private final float perfectHitHeight;
@@ -42,6 +42,7 @@ public class GameplayViewModel {
         noteSpriteFactory = new NoteSpriteFactory(columnWidth, level);
         firstToHit = new int[columnCount];
         firstToAdd = new int[columnCount];
+        score = new Score(level.modifiers().contains(Modifier.NOFAIL) ? 0.5f : 1);
         for(int i=0; i<columnCount; i++) {
             noteSprites.add(new Array<>());
             if(notes.get(i).isEmpty()){
@@ -64,7 +65,7 @@ public class GameplayViewModel {
                 missedSprites.add(noteSprites.get(i).get(0));
                 noteSprites.get(i).removeIndex(0);
                 score.missedUpdate();
-                health.updateHealth(HitResult.MISS);
+                health.updateHealth(HitResult.MISS, level.modifiers().contains(Modifier.NOMISS), level.modifiers().contains(Modifier.PERFECT));
                 combo.updateCombo(HitResult.MISS);
                 if(notes.get(i).size() == firstToHit[i]) firstToHit[i] = -1;
             }
@@ -111,7 +112,7 @@ public class GameplayViewModel {
     public HitResult onPressUpdate(int column, float time){
         if(firstToHit[column] == -1){return HitResult.NONE;}
         HitResult result = notes.get(column).get(firstToHit[column]).hitCheck(time);
-        health.updateHealth(result);
+        health.updateHealth(result, level.modifiers().contains(Modifier.NOMISS), level.modifiers().contains(Modifier.PERFECT));
         combo.updateCombo(result);
         score.update(result,combo);
         if(result != HitResult.NONE) {
@@ -127,7 +128,7 @@ public class GameplayViewModel {
         for(Note note : notes.get(column)){
             if(note instanceof SliderNote slider) {
                 if(time >= slider.hitTime() && time <= slider.releaseTime()){
-                    health.updateHealth(HitResult.HOLD);
+                    health.updateHealth(HitResult.HOLD, level.modifiers().contains(Modifier.NOMISS), level.modifiers().contains(Modifier.PERFECT));
                     combo.updateCombo(HitResult.HOLD);
                     score.update(HitResult.HOLD,combo);
                 }

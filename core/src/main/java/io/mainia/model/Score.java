@@ -6,7 +6,10 @@ public class Score {
     private int noOfGreats;
     private int noOfOks;
     private int noOfMisses;
-
+    private float multiplier;
+    public Score(float multiplier){
+        this.multiplier = multiplier;
+    }
     public int currentScore(){return score;}
     public int NoOfPerfects(){return noOfPerfects;}
     public int NoOfGreats(){return noOfGreats;}
@@ -35,6 +38,6 @@ public class Score {
     }
 
     public Result createResult(){
-        return new Result(score,noOfPerfects,noOfGreats,noOfOks,noOfMisses);
+        return new Result((int) (multiplier*score),noOfPerfects,noOfGreats,noOfOks,noOfMisses);
     }
 }

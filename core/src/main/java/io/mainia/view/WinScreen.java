@@ -45,7 +45,7 @@ public class WinScreen implements Screen {
 
     @Override
     public void show() {
-        Texture up = new Texture(Gdx.files.internal("tryagain_win.png"));
+        Texture up = new Texture(Gdx.files.internal("buttons/tryagain_win.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
@@ -62,7 +62,7 @@ public class WinScreen implements Screen {
         });
         Gdx.input.setInputProcessor(stage);
         stage.addActor(button);
-        Texture up1 = new Texture(Gdx.files.internal("select_another.png"));
+        Texture up1 = new Texture(Gdx.files.internal("buttons/select_another.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp1 = new TextureRegionDrawable(new TextureRegion(up1));

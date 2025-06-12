@@ -75,7 +75,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void show() {
         refreshButtons();
-        Texture up = new Texture(Gdx.files.internal("backgrounds/custom_image_up.png"));
+        Texture up = new Texture(Gdx.files.internal("buttons/play_button.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp = new TextureRegionDrawable(new TextureRegion(up));
@@ -97,7 +97,7 @@ public class SettingsScreen implements Screen {
         });
         gameButtonStage.addActor(button);
 
-        Texture up1 = new Texture(Gdx.files.internal("plus.png"));
+        Texture up1 = new Texture(Gdx.files.internal("buttons/plus.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp1 = new TextureRegionDrawable(new TextureRegion(up1));
@@ -112,7 +112,7 @@ public class SettingsScreen implements Screen {
             }
         });
         stage2.addActor(button1);
-        Texture up2 = new Texture(Gdx.files.internal("minus.png"));
+        Texture up2 = new Texture(Gdx.files.internal("buttons/minus.png"));
         //Texture down = new Texture(Gdx.files.internal("button_textures/custom_image_down.png"));
 
         Drawable upp2 = new TextureRegionDrawable(new TextureRegion(up2));
